@@ -1,0 +1,68 @@
+#root {
+    display: grid;
+    grid-template-columns: 1.5fr 8fr;
+    height: 100vh;
+    justify-content: center;
+    /* padding: 0 10px; */
+    gap: 20px;
+}
+
+/* .header {
+    display: flex;
+    grid-area: 1 / 1 / 2 / 3;
+} */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    grid-row: 1 / 2;
+    border-radius: 20px;
+    background-color: #DBDFEA;
+    /* box-shadow: 0 0 4px 4px rgba(153, 153, 153, 0.1); */
+    padding: 2rem;
+}
+
+.sd-links {
+    text-decoration: none;
+    color: #213555;
+}
+.sd-main {
+    display: flex;
+    flex-direction: column;
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    width: 100%;
+}
+
+.sd-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.sd-link-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .8em;
+}
+.sd-icons {
+    width: 1em;
+    height: 1em;
+}
+
+.sd-footer {
+    display: flex;
+    flex-direction: column;
+    gap: .8em;
+    justify-self: center;
+    align-self: flex-start;
+    grid-area: 3 / 1 / 4 / 2;
+    width: 100%;
+    height: auto;
+}
+.footer  {
+    grid-area: 3 / 1 / 4 / 3;
+    justify-self: flex-end;
+    align-self: flex-end;
+}

@@ -1,36 +1,58 @@
 // Sidebar links
+
+import inboxIcon from '../../assets/icons/inbox.svg';
+import privateTaskIcon from '../../assets/icons/private-task.svg';
+import folderIcon from '../../assets/icons/folder.svg';
+import helpIcon from '../../assets/icons/help.svg';
+import inviteIcon from '../../assets/icons/invite.svg';
+import taskIcon from '../../assets/icons/task.svg';
+import todayIcon from '../../assets/icons/today.svg';
+import upcomingIcon from '../../assets/icons/upcoming.svg';
+
 const defaultTabs = [{
-    link: 'Inbox',
-    icon: 'inbox',
+    name: 'Inbox',
+    icon: inboxIcon,
 }, {
-    link: 'Private tasks',
-    icon: 'private-task'
+    name: 'Private tasks',
+    icon: privateTaskIcon,
 },
 {
-    link: 'Today',
-    icon: 'today'
+    name: 'Today',
+    icon: todayIcon,
 }, 
 {
-    link: 'Upcoming',
-    icon: 'upcoming'
+    name: 'Upcoming',
+    icon: upcomingIcon,
 }
 ];
 
 function createlink(link) {
-    return `<a href="#" class="sd-links" id="${link}-tab">${link}>`;
+    return `<a href="#" class="sd-links" id="${link.name.toLowerCase()}-tab">${link.name}</a>`;
 }
 
-function createIconElement(icon) {
-    return `<img src="${icon}.svg" id="${icon}-icon class="sd-icons>`;
+function createIconElement(link) {
+    return `<img src="${link.icon}" id="${link.name.toLowerCase()}-icon" class="sd-icons">`;
 }
 
-function createToplinksHtml() {
+function createToplinksHtml(links) {
     let sdHtml = '';
-    defaultTabs.forEach((item) => {
-        
+    links.forEach((item) => {
+        sdHtml += `<div class="sd-link-wrapper">${createIconElement(item) + createlink(item)}</div>`;
     });
+    return sdHtml;
 }
-const projects = '<div class="sd-heading" id="projects"><h3>Projects</h3></div>';
+const projects = '';
+const teams = '';
+
+const sidebarFooter = [{
+    name: "Invite people",
+    icon: inviteIcon,
+},
+{
+    name: "Help",
+    icon: helpIcon,
+}
+]
 
 // Sidebar contain two section top section and bottom section
 
@@ -40,6 +62,26 @@ const projects = '<div class="sd-heading" id="projects"><h3>Projects</h3></div>'
 
 export default function sidebar() {
     return `
-        <div class="sidebar"></div>
+        <div class="sidebar">
+            <div class="top-section">
+                <div class="sd-header">
+                    <h4 id="logo">NextTask</h4>
+                </div>
+                <div class="sd-main">
+                    <div class="sd-heading">
+                        ${createToplinksHtml(defaultTabs)}
+                    </div>
+                    <div class="sd-heading" id="projects">
+                        <h5>Projects</h5>
+                    </div>
+                    <div class="sd-heading" id="Teams">
+                        <h5>Teams</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="sd-footer">
+                ${createToplinksHtml(sidebarFooter)}
+            </div>
+        </div>
     `;
 } 
