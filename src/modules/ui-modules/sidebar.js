@@ -1,3 +1,6 @@
+//Add Sibebar css
+import '../../css/sidebar.css';
+
 // Import project and teams
 import { getProjects, getTeams } from '../data';
 
