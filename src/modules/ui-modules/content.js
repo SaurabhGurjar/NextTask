@@ -1,5 +1,8 @@
+import '../../css/content.css';
+
+
 export default function content() {
     return (`
-        <div class="main">content</div>
+        <div id="main-container">content</div>
     `);
 }

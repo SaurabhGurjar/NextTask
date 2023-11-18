@@ -17,6 +17,7 @@
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 30px; 
+    cursor: default;
 }
 
 #logo-icon{ 
