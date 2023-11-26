@@ -21,27 +21,6 @@ const tasks = [{
     date: '4 Dec',
     priority: 'high',
     assignee: 'Saurabh',
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Jeans',
-    date: '1 Dec',
-    priority: 'high',
-    assignee: 'Saurabh',
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Jackets',
-    date: '3 Dec',
-    priority: 'high',
-    assignee: 'Saurabh',
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Blazers',
-    date: '4 Dec',
-    priority: 'high',
-    assignee: 'Saurabh',
 }, {
     heading: 'Winter clothings',
     description: 'Buy Jeans',

@@ -4,6 +4,7 @@
     padding: 10px;
     border-radius: 0.6rem;
     border: 1px solid #9496a0;
+    width: 100%;
 }
 
 #task-form {
@@ -19,7 +20,7 @@
     width: 100%;
 }
 
-.task-field{ 
+.task-field {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -33,9 +34,10 @@
 }
 
 .task-btn-container {
-    display: flex;  
+    display: flex;
     gap: 1rem;
 }
+
 .task-btn-wrapper {
     display: flex;
     padding: 0.3em .5em;
@@ -49,9 +51,11 @@
 .task-btn-wrapper:hover {
     background-color: #f2f2f3;
 }
+
 .btn-icon {
     width: 1rem;
 }
+
 .task-btn {
     cursor: pointer;
     background: none;
@@ -79,12 +83,54 @@
 }
 
 .control-btn:hover {
- background-color: #DBDFEA;   
+    background-color: #DBDFEA;
 }
+
 #form-add-task-btn {
     background-color: #ACB1D6;
     color: #fff;
 }
+
 #form-add-task-btn:hover {
     background-color: #8294C4;
+}
+
+#date-btn-container {
+    position: relative;
+}
+
+.date-form-container {
+    position: absolute;
+    display: flex;
+    top: -40px;
+    left: 1px;
+    z-index: 10;
+    padding: 5px;
+    border-radius: 4px;
+    gap: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 4px 2px rgba(64, 64, 64, 0.1);
+
+    .date-fields {
+        display: flex;
+        border: none;
+        width: fit-content;
+        background: none;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Remove up arrow and down arrow button*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#yy:focus-visible,
+#mm:focus-visible,
+#dd:focus-visible {
+    border: none;
+    outline: none;
 }
