@@ -1,3 +1,44 @@
 #main-container  {
-    padding: 2rem 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem 4rem;
+    gap: 10px;
+    overflow-y: scroll;
+}
+
+.m-main-heading-container {
+    display: flex;
+    padding: 50px 0 0 0;
+    /* border-bottom: 1px solid #DBDFEA; */
+}
+
+.m-main-heading-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #424242;
+}
+.task-btn-and-taskform-container {
+    padding: 10px 0;
+}
+
+#add-task-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+    gap: 0.3em;
+    color: #213555;
+    font-weight: 600;
+    padding: 0.3em 0.4em;
+    cursor: pointer;
+}
+
+#add-task-btn:hover {
+    outline: 1px solid #213555;
+    border-radius: 0.2em;
+}
+.m-add-task-btn-icon {
+    width: 1rem; 
 }
