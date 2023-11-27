@@ -1,5 +1,8 @@
+import { appendTask } from './showtask.js';
+import dateScript from './datepicker-script.js';
+import datePicker from '../ui-modules/datepicker.js';
+// import { da } from 'date-fns/locale';
 const taskArr = [];
-import { appendTask } from "./showtask.js";
 
 const tasks = [{
     heading: 'Winter clothings',
@@ -132,7 +135,10 @@ export default function taskFormController(){
     const taskForm = document.getElementById('task-form');
     const addTaskBtn = document.getElementById('form-add-task-btn');
     const addBtn = document.querySelector('#add-task-btn');
+    const datePickerContainer = document.getElementById('dp-container');
     const cancelBtn = document.querySelector('#cancel-btn');
+    const dateForm = document.querySelector('.date-form-container');
+    const dateBtn = document.getElementById('date');
 
     addBtn.addEventListener('click', () => {
         toggleTaskForm(taskFormContainer, addBtn);
@@ -145,9 +151,19 @@ export default function taskFormController(){
         if(getTaskFormData()) {
             taskArr.push(getTaskFormData(taskFormContainer));
             taskForm.reset();
+            date.value = 'Due date';
             toggleTaskForm(addBtn, taskFormContainer);
             appendTask();
         }
         console.log(taskArr)
+    });
+    date.addEventListener('click', () => {
+        if(!dateForm) {
+            datePickerContainer.innerHTML = datePicker();
+            dateScript();
+        } else if(dateForm){
+            dateForm.remove();
+        }
+
     });
 }

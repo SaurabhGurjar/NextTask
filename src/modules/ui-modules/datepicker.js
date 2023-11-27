@@ -1,27 +1,13 @@
-// const choosedYear =  document.getElementById('yy');
-// const choosedMonth =  document.getElementsById('dd');
-
-export function daysInMonths(month, leapYear) {
-    const thirtyDayMonths = ['apr', 'jun', 'sep', 'nov'];
-    const daysInAMonth = 0;
-    if (month === 'feb') {
-        if (leapYear) {
-            daysInAMonth = 29;
-        } else {
-            daysInAMonth = 28;
-        }
-    } else if (month in thirtyDayMonths) {
-        daysInAMonth = 30;
-    } else {
-        daysInAMonth = 31;
-    }
-    return createDays(daysInAMonth);
-}
+import arrowIcon from '../../assets/icons/arrow.svg';
 
 function createDays(lastDay) {
     let days = '';
+    let Zero = 0;
     for (let i = 1; i <= lastDay; i++) {
-        days += `<option value="${i}">${i}</option>`;
+        if(i > 9) {
+            Zero = '';
+        }
+        days += `<option value="${Zero}${i}" id="dd-${Zero}${i}" class="op-dd">${Zero}${i}</option>`;
     }
     return days;
 }
@@ -30,7 +16,7 @@ function createMonths() {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let monthsHTML = '';
     months.forEach((month) => {
-        monthsHTML += `<option value="${month}">${month}</option>`;
+        monthsHTML += `<option value="${month.toLowerCase()}" id="${month.toLowerCase()}">${month}</option>`;
     });
     return monthsHTML;
 }
@@ -46,28 +32,23 @@ function createYears() {
     return yearsHTML;
 }
 
-function isLeapYear(year) {
-    if (year % 4 === 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 export default function datePicker() {   
     const daysDefault = 31
     return `<div class="date-form-container">
-        <select id="dd" name="day" class="date-fields">
-            <option value="" disable selected>Day</option>
-            ${createDays(daysDefault)}
+            <select id="dd" name="day" class="date-fields">
+                <option value="null" disable selected>Day</option>
+                ${createDays(daysDefault)}
             </select>
             <select id="mm" name="months" class="date-fields">
-            <option value="" disable selected>Month</option>
-            ${createMonths()}
+                <option value="null" disable selected>Month</option>
+                ${createMonths()}
             </select>
             <select id="yy" name="years" class="date-fields">
-            <option value="" disable selected>Year</option>
-            ${createYears()}
-        </select>
+                <option value="null" disable selected>Year</option>
+                ${createYears()}
+            </select>
+            <button id="date-confirm-btn">
+                <img src="${arrowIcon}" id="date-confirm-btn-icon">
+            </button>
     </div>`;
 }

@@ -16,7 +16,7 @@ export default function taskForm() {
                         <div class="task-btn-wrapper" id="date-btn-container">    
                             <img src="${dateIcon}" id="date-icon" class="btn-icon"> 
                             <input type="button" id="date" class="task-btn" value="Due date">
-                            ${datePicker()}
+                            <div id="dp-container"></div>
                         </div>    
                         <div class="task-btn-wrapper">
                             <img src="${priorityIcon}" id="priority-icon" class="btn-icon"> 
