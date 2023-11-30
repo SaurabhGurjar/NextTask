@@ -1,4 +1,5 @@
-import datePicker from "../ui-modules/datepicker";
+import arrowIcon from '../../assets/icons/arrow.svg';
+import closeIcon from '../../assets/icons/cross.svg';
 
 export default function dateSript() {
     const dateForm = document.querySelector('.date-form-container');
@@ -6,8 +7,8 @@ export default function dateSript() {
     const month = document.getElementById('mm');
     const year = document.getElementById('yy');
     const dateBtn = document.getElementById('date');
-
     const confirmDateBtn = document.getElementById('date-confirm-btn');
+    const confirmDateBtnIcon = document.getElementById('date-confirm-btn-icon')
     
 
     function isLeapYear(leapYear) {
@@ -18,11 +19,17 @@ export default function dateSript() {
         }
     }
     
-    function isDateEnter() {
-        console.log('runing');
+    function isDateEntered() {
         return (day.value !== 'null' && month.value !== 'null' && year.value !== 'null')
     }
     
+    function toggleConfirmBtn() {
+        if(isDateEntered()) {
+            confirmDateBtnIcon.src = `${arrowIcon}`;
+        } else {
+            confirmDateBtnIcon.src = `${closeIcon}`;
+        }
+    }
     
     function changeDay(month, year) {
         const allDays = document.querySelectorAll('.op-dd');
@@ -72,21 +79,26 @@ export default function dateSript() {
 
     confirmDateBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(isDateEnter());
-        if (isDateEnter()) {
+        if (isDateEntered()) {
             dateBtn.value = ` ${day.value} ${month.value.charAt(0).toUpperCase() + month.value.slice(1)} ${year.value}`;
             dateForm.remove();
         } else {
             dateForm.remove();
-            return;
         }
     });
+
+    day.onchange = () => {
+        toggleConfirmBtn();
+    }
     month.addEventListener(('change'), () => {
         changeDay(month.value, year.value);
+        toggleConfirmBtn();
     });
 
     year.addEventListener(('change'), () => {
         changeDay(month.value, year.value);
+        toggleConfirmBtn();
+
     });
 }
 function daysInMonths(month, leapYear) {

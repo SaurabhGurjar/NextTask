@@ -3,25 +3,64 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 2px;
+    gap: 6px;
     padding: 15px 0;
     border-bottom: 1px solid #DBDFEA;
+    width: 100%;
 }
 .task-cbox:checked {
     .task-heading {
         text-decoration: line-through;
     }
 }
+.checkbox-heading-interface-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.task-edit-del-btn-container {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
 .date-description-container {
     display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.date-description-wrapper {
+    display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding-left: 25px;
     gap: 5px;
 }
-.task-description {
+
+.task-interface-btn {
+    border: none;
+    padding: 4px 6px;
+    background: none;
+    border-radius: 6px;
+}
+
+.task-interface-btn:hover {
+    background-color: #DBDFEA;
+}
+.priority-assignee-wrappper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+}
+.task-description,
+.task-priority {
     font-size: 13px;
 }
-.task-date {
+.task-date, 
+.task-name {
     display: flex;
     gap: 0.7em;
     align-items: center;

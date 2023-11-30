@@ -1,4 +1,4 @@
-import arrowIcon from '../../assets/icons/arrow.svg';
+import closeIcon from '../../assets/icons/cross.svg';
 
 function createDays(lastDay) {
     let days = '';
@@ -34,7 +34,7 @@ function createYears() {
 
 export default function datePicker() {   
     const daysDefault = 31
-    return `<div class="date-form-container">
+    return `<div class="date-form-container" id="date-picker">
             <select id="dd" name="day" class="date-fields">
                 <option value="null" disable selected>Day</option>
                 ${createDays(daysDefault)}
@@ -47,8 +47,8 @@ export default function datePicker() {
                 <option value="null" disable selected>Year</option>
                 ${createYears()}
             </select>
-            <button id="date-confirm-btn">
-                <img src="${arrowIcon}" id="date-confirm-btn-icon">
+            <button id="date-confirm-btn" class="confirm-btn">
+                <img src="${closeIcon}" id="date-confirm-btn-icon">
             </button>
     </div>`;
 }

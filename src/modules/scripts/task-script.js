@@ -1,6 +1,8 @@
 import { appendTask } from './showtask.js';
 import dateScript from './datepicker-script.js';
 import datePicker from '../ui-modules/datepicker.js';
+import assigneeForm from '../ui-modules/assignee-form.js';
+import assigneeScript from './assignee-script.js';
 // import { da } from 'date-fns/locale';
 const taskArr = [];
 
@@ -110,7 +112,8 @@ function getTaskFormData() {
     const description = document.getElementById('tkd');
     const date = document.getElementById('date');
     const priority = document.getElementById('priority');
-    const assignee = document.getElementById('assignee');
+    const assignee = document.getElementById('assignee-btn');
+
     if(boolTaskEntered(heading, description)) {
         const task = new Task(heading.value, description.value, date.value, priority.value, assignee.value);
         return task;
@@ -126,6 +129,18 @@ function boolTaskEntered(heading, description) {
     return false; 
 }
 
+function removeBtnInputForms() {
+    const dateForm = document.getElementById('date-picker');
+    const assigneeForm = document.getElementById('assignee-form');
+
+    if(assigneeForm) {
+        assigneeForm.remove();
+    }
+    if(dateForm) {
+        dateForm.remove();
+    }
+}
+
 export function getTasks() {
     return taskArr;
 }
@@ -137,14 +152,18 @@ export default function taskFormController(){
     const addBtn = document.querySelector('#add-task-btn');
     const datePickerContainer = document.getElementById('dp-container');
     const cancelBtn = document.querySelector('#cancel-btn');
-    const dateForm = document.querySelector('.date-form-container');
-    const dateBtn = document.getElementById('date');
+    const assigneeFormContainer = document.getElementById('assignee-form-container');
+    const assignee = document.getElementById('assignee-btn');
+    const priority = document.getElementById('priority');
+
 
     addBtn.addEventListener('click', () => {
         toggleTaskForm(taskFormContainer, addBtn);
     });
     cancelBtn.addEventListener('click', () => {
         toggleTaskForm(addBtn, taskFormContainer);
+        removeBtnInputForms()
+
     }); 
     
     addTaskBtn.addEventListener('click', () => {
@@ -157,13 +176,28 @@ export default function taskFormController(){
         }
         console.log(taskArr)
     });
+
+
     date.addEventListener('click', () => {
+        const dateForm = document.getElementById('date-picker');
+        removeBtnInputForms()
         if(!dateForm) {
             datePickerContainer.innerHTML = datePicker();
             dateScript();
-        } else if(dateForm){
-            dateForm.remove();
-        }
-
+        } 
     });
+
+    assignee.addEventListener('click', () => {
+        const isAssigneeFormActive = document.getElementById('assignee-form');
+        removeBtnInputForms()
+        if(!isAssigneeFormActive) {
+            assigneeFormContainer.innerHTML = assigneeForm();
+            assigneeScript();
+        }
+    });
+
+    priority.onclick = () => {
+        removeBtnInputForms();
+    }
+    
 }

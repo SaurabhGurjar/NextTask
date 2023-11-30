@@ -3,6 +3,7 @@ import assigneeIcon from '../../assets/icons/person.svg';
 import dateIcon from '../../assets/icons/calendar.svg';
 import priorityIcon from '../../assets/icons/flag.svg';
 import datePicker from './datepicker';
+import assigneeForm from './assignee-form';
 export default function taskForm() {
     return (
         `
@@ -20,11 +21,19 @@ export default function taskForm() {
                         </div>    
                         <div class="task-btn-wrapper">
                             <img src="${priorityIcon}" id="priority-icon" class="btn-icon"> 
-                            <input type="button" id="priority" class="task-btn" value="Priority">
+                            <div id="priority-form-container">
+                                <select class="task-btn" id="priority" name="priority">
+                                    <option value="null" disable selected>Priority</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="task-btn-wrapper">
+                        <div class="task-btn-wrapper" id="assignee-btn-container">
                             <img src="${assigneeIcon}" id="assignee-icon" class="btn-icon">
-                            <input type="button" id="assignee" class="task-btn" value="Assignee">
+                            <input type="button" id="assignee-btn" class="task-btn" value="Assignee">
+                            <div id="assignee-form-container"></div>
                         </div>
                     </div>  
                     <div class="control-btn-container">
