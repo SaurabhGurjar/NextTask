@@ -24,9 +24,16 @@
     gap: 5px;
     justify-content: flex-end;
 }
+.d-p-pi-contianer {
+    display: flex;
+    justify-content: center;
+    padding-left: 8px;
+    width: 100%;
+}
 .date-description-container {
     display: flex;
     justify-content: space-between;
+    align-self: center;
     width: 100%;
 }
 .date-description-wrapper {
@@ -34,7 +41,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-left: 25px;
+    padding-left: 12px;
     gap: 5px;
 }
 
@@ -54,6 +61,7 @@
     justify-content: center;
     align-items: flex-end;
     gap: 5px;
+    padding-right: 8px;
 }
 .task-description,
 .task-priority {
@@ -69,4 +77,26 @@
 }
 .task-date-icon {
     width: 1rem;
+}
+
+.priority-high {
+    background-color: rgb(255 16 16 / 40%);
+}
+.priority-low {
+    background-color: rgb(28 247 28 / 40%);
+}
+
+.priority-medium {
+    background-color: rgb(58 135 224 / 40%);
+}
+
+.task-completed {
+    background-color: rgb(64 64 64 / 10%);
+    text-decoration: line-through;
+    padding: 15px 10px !important;
+    color: rgb(64 64 64 / 50%)
+}
+.priority-indicator {
+    width: 4px;
+    /* background-color: black; */
 }

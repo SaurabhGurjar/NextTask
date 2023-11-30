@@ -1,5 +1,5 @@
 .task-form-container {
-    display: none;
+    display: flex;
     flex-direction: column;
     border-radius: 0.6rem;
     border: 1px solid #9496a0;
@@ -204,13 +204,3 @@ option[value="low"] {
     color: blue;
 }
 
-.priority-high {
-    background-color: rgb(255 16 16 / 10%);
-}
-.priority-low {
-    background-color: rgb(28 247 28 / 10%);
-}
-
-.priority-medium {
-    background-color: rgb(58 135 224 / 10%);
-}

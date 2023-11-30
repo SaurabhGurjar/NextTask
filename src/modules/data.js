@@ -33,6 +33,9 @@ const projects = [
     },
     {
         name: 'Data visualizer'
+    },
+    {
+        name: 'Instagram post maker'
     }
 ];
 

@@ -8,8 +8,8 @@ function createtasksHtml() {
     });
 }
 export function appendTask() {
-    const DomTasksElements = document.getElementById('tasks');
-    DomTasksElements.innerHTML += (taskTemplate(getTasks().length - 1, getTasks()[(getTasks().length - 1)]));
+    const tasksElements = document.getElementById('tasks');
+    tasksElements.innerHTML += (taskTemplate(getTasks().length - 1, getTasks()[(getTasks().length - 1)]));
 }
 
 export function tasksHTML() {

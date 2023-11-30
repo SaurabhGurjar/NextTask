@@ -13,12 +13,12 @@ export default function content() {
                 <div class="m-task-container" id="tasks">
                     ${tasksHTML()}
                     </div>
-                <div class="task-btn-and-taskform-container">
+                <div class="task-btn-and-taskform-container" id="tb-tf-container">
                     <button id="add-task-btn" class="add-task-btn">
                         <img src="${addIcon}" class="m-add-task-btn-icon">
-                        <span>New task</span>
+                        New task
                     </button>
-                    ${taskForm()}
+                    
                 </div>
             </div>
         </div>

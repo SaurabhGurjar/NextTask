@@ -13,7 +13,6 @@ export default function assigneeScript() {
     }
 
     function toggleConfirmBtn() {
-        console.log(confirmBtn, arrowIcon);
         if(isDateEntered()) {
             confirmBtnIcon.src = `${arrowIcon}`;
         } else {
