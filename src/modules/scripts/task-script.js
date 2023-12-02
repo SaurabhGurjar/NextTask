@@ -357,6 +357,7 @@ function updatePageTaskElements(taskId) {
     formComponentObj.date.textContent = taskObj.getDate();
     formComponentObj.priority.textContent = capitalize(taskObj.getPriority());
     formComponentObj.name.textContent = capitalize(taskObj.getAssignee())
+    formComponentObj.priorityIndicator.classList.replace( formComponentObj.priorityIndicator.classList[1], `priority-${taskObj.getPriority()}`);
 
 
 }

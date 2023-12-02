@@ -22,11 +22,11 @@ export default function taskForm(taskId) {
                         <div class="task-btn-wrapper">
                             <img src="${priorityIcon}" id="priority-icon" class="btn-icon"> 
                             <div id="priority-form-container">
-                                <select class="task-btn" id="priority" name="priority" value="priority">
-                                    <option value="null" disable selected>Priority</option>
+                                <select class="task-btn" id="priority" name="priority">
+                                    <option value="priority" disable selected>Priority</option>
                                     <option value="high">High</option>
                                     <option value="medium">Medium</option>
-                                    <option value="low">Low</option>
+                                    <option value="low" >Low</option>
                                 </select>
                             </div>
                         </div>

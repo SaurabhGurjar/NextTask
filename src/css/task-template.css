@@ -78,7 +78,7 @@
     font-size: 13px;
 }
 .task-date, 
-.task-name {
+.task-name-wrapper {
     display: flex;
     gap: 0.7em;
     align-items: center;
@@ -87,6 +87,11 @@
 }
 .task-date-icon {
     width: 1rem;
+}
+
+.priority-indicator {
+    width: 4px;
+    background-color: rgb(64 64 64 / 20%);
 }
 
 .priority-high {
@@ -106,7 +111,4 @@
     padding: 15px 10px !important;
     color: rgb(64 64 64 / 50%)
 }
-.priority-indicator {
-    width: 4px;
-    /* background-color: black; */
-}
+

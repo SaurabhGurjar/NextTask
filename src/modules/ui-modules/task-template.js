@@ -13,7 +13,7 @@ export function showPriority(taskObj) {
             return 'priority-high';
         } else if (taskObj.getPriority() === 'medium') {
             return 'priority-medium';
-        } else {
+        } else if (taskObj.getPriority() === 'low'){
             return 'priority-low';
         }
     } else {
@@ -44,7 +44,7 @@ export default function taskTemplate(taskId, taskObj) {
                     </div>
                 </div>
                 <div class="d-p-pi-contianer">
-                    <div class="priority-indicator ${showPriority(taskObj)}" id="${taskId}-pind"></div>
+                    <div class="priority-indicator ${showPriority(taskObj)} " id="${taskId}-pind"></div>
                     <div class="date-description-container">
                         <div class="date-description-wrapper">
                             <span id="${taskId}-d" class="task-description">${taskObj.getDescription()}</span>
@@ -52,7 +52,7 @@ export default function taskTemplate(taskId, taskObj) {
                         </div>
                         <div class="priority-assignee-wrappper">
                             <span id="${taskId}-p" class="task-priority">${capitalize(taskObj.getPriority())}</span>
-                            <span id="${taskId}-name" class="task-name"><img src="${personIcon}" class="task-date-icon">${capitalize(taskObj.getAssignee())}</span>
+                            <div class="task-name-wrapper"><img src="${personIcon}" class="task-date-icon"><span id="${taskId}-name">${capitalize(taskObj.getAssignee())}</span></div>
                         </div>                
                     </div>
                 </div>
