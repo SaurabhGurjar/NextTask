@@ -1,10 +1,12 @@
-import { appendTask } from './showtask.js';
-import dateScript from './datepicker-script.js';
-import datePicker from '../ui-modules/datepicker.js';
-import assigneeForm from '../ui-modules/assignee-form.js';
-import assigneeScript from './assignee-script.js';
-import { showPriority } from '../ui-modules/task-template.js';
-import taskForm from '../ui-modules/task-form.js';
+import { appendTask } from './showtask';
+import dateScript from './datepicker-script';
+import datePicker from '../ui-modules/datepicker';
+import assigneeForm from '../ui-modules/assignee-form';
+import assigneeScript from './assignee-script';
+import { showPriority } from '../ui-modules/task-template';
+import taskForm from '../ui-modules/task-form';
+import { capitalize } from './stringlib';
+import { el } from 'date-fns/locale';
 // import { da } from 'date-fns/locale';
 const taskArr = [];
 
@@ -13,37 +15,7 @@ const tasks = [{
     description: 'Buy Jeans',
     date: '1 Dec',
     priority: 'high',
-    assignee: 'Saurabh',
-    project: 'Personal',
-    team: 'Personal',
-    completed: true,
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Jackets',
-    date: '3 Dec',
-    priority: 'high',
-    assignee: 'Saurabh',
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Blazers',
-    date: '4 Dec',
-    priority: 'low',
-    assignee: 'Saurabh',
-}, {
-    heading: 'Winter clothings',
-    description: 'Buy Jeans',
-    date: '1 Dec',
-    priority: 'high',
-    assignee: 'Saurabh',
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Jackets',
-    date: '3 Dec',
-    priority: 'high',
-    assignee: 'Saurabh',
+    assignee: 'saurabh',
     project: 'Personal',
     team: 'Personal',
     completed: true,
@@ -188,99 +160,46 @@ function findTaskObj(taskId) {
     return taskArr[index];
 }
 
-// Edit task 
-function editTask(taskId) {
-    const taskContainer = document.getElementById(`${taskId}`);
 
-    const taskObj = findTaskObj(taskId);
-    const taskFormElements = getTaskFormData();
-    taskFormElements.heading.value = taskObj.heading;
-    taskFormElements.description.value = taskObj.description;
-    taskFormElements.date.value = taskObj.date;
-    taskFormElements.priority.value = taskObj.priority;
-    taskFormElements.assignee.value = taskObj.assignee;
-
+function addTaskFormToPage(container, taskId) {
+    container.innerHTML += taskForm(taskId);
 }
 
-
-function removeTaskFromTaskArr(taskId) {
-    const itemIndex = Number(taskId.charAt(0));
-    taskArr.splice(itemIndex, 1);
-}
-
-function removeTaskFromPage(taskId) {
-    const elementId = taskId.charAt(0);
-    document.getElementById(elementId).remove();
-}
-
-function markCompletedTasks(task, container) {
-    const taskObj = findTaskObj(task.id);
-    task.classList.add('task-completed');
-    container.classList.remove(`${showPriority(taskObj)}`);
-    taskObj.setTaskState(true);
-}
-
-function unmarkTasks(task, container) {
-    task.classList.remove('task-completed');
-    const taskObj = findTaskObj(task.id);
-    taskObj.setTaskState(false);
-    container.classList.add(`${showPriority(taskObj)}`);
-}
-
-function changeTaskState(event) {
-    const taskcheckBox = event.target.id;
-    const taskId = taskcheckBox.charAt(0);
-    const task = document.getElementById(`${taskId}`);
-    const priorityIndicator = document.getElementById(`${taskId}-pind`);
-    if (event.target.checked) {
-        markCompletedTasks(task, priorityIndicator);
-    } else {
-        unmarkTasks(task, priorityIndicator);
-    }
-}
-
-function addTaskFormToPage() {
-    const taskFormContainer = document.getElementById('tb-tf-container');
-    taskFormContainer.innerHTML += taskForm();
-}
-
-function getTaskFormComponents() {
-    const taskFormContainer = document.querySelector('.task-form-container');
-    const taskForm = document.getElementById('task-form');
-    const datePickerContainer = document.getElementById('dp-container');
-    const assigneeFormContainer = document.getElementById('assignee-form-container');
-    const assignee = document.getElementById('assignee-btn');
-    const priority = document.getElementById('priority');
-    const addTaskBtn = document.getElementById('form-add-task-btn');
-    const cancelBtn = document.querySelector('#cancel-btn');
-    const date = document.getElementById('date');
-
+function getTaskComponents(taskId) {
+    const heading = document.getElementById(`${taskId}-h`);
+    const description = document.getElementById(`${taskId}-d`);
+    const priorityIndicator = document.getElementById(`${taskId}-pind`)
+    const date = document.getElementById(`${taskId}-date`);
+    const priority = document.getElementById(`${taskId}-p`);
+    const name = document.getElementById(`${taskId}-name`);
 
     return {
-        taskFormContainer,
-        taskForm,
-        datePickerContainer,
-        assigneeFormContainer,
-        assignee,
-        priority,
-        addTaskBtn,
-        cancelBtn,
+        heading,
+        description,
+        priorityIndicator,
         date,
+        priority,
+        name,
     }
 
 }
 
-function toggleElementVisibility(element, hide) {
-    if (hide) {
-        document.getElementById(element).style.display = 'none';
+function elementVisibility(elementId, visible) {
+    if (visible) {
+        document.getElementById(elementId).style.display = 'flex';
     } else {
-        document.getElementById(element).style.display = 'flex';
+        document.getElementById(elementId).style.display = 'none';
     }
 }
 
-function renderTaskForm(addBtnId) {
-    addTaskFormToPage();
-    toggleElementVisibility(addBtnId, true);
+function renderTaskForm(addBtnId, taskId) {
+    const taskFormContainer = document.getElementById('tb-tf-container');
+    const cancelBtn = document.getElementById('cancel-btn');
+    if (!taskId) {
+        taskId = 'new-task-btn';
+    }
+    addTaskFormToPage(taskFormContainer, taskId);
+    elementVisibility(addBtnId, false);
 }
 
 function renderDatePicker() {
@@ -304,29 +223,144 @@ function renderAssigneeForm() {
     }
 }
 
-function closeTaskForm() {
+function closeTaskForm(caller) {
     const taskFormContainer = document.querySelector('.task-form-container');
-    const addBtnId = 'add-task-btn';
-    toggleElementVisibility(addBtnId, false);
-    removeBtnInputForms()
     taskFormContainer.remove();
+    if (caller === 'new-task-btn') {
+        const addBtnId = 'add-task-btn';
+        elementVisibility(addBtnId, true);
+    } else if (caller.slice(2) === 'edit') {
+        const taskWrapper = (`${caller.charAt(0)}-wrapper`);
+        elementVisibility(taskWrapper, true);
+    }
+    removeBtnInputForms()
 }
 
-function addNewTask() {
+function addNewTask(element) {
+    const callerId = element.dataset.caller;
     const taskFormContainer = document.querySelector('.task-form-container');
     const date = document.getElementById('date');
-    const addBtnId = 'add-task-btn';
     const taskForm = document.getElementById('task-form');
-
+    let hiddenElementId;
     if (boolTaskEntered()) {
-        taskArr.push(createNewTask(getTaskFormData()));
+
+        if (callerId === 'new-task-btn') {
+            hiddenElementId = 'add-task-btn';
+            const taskId = taskArr.length;
+            const tasksContainer = document.getElementById('tasks');
+            taskArr.push(createNewTask(getTaskFormData()));
+            appendTask(taskId, findTaskObj(taskId), tasksContainer);
+        } else if (callerId.slice(2) === 'edit') {
+            hiddenElementId = `${callerId.charAt(0)}-wrapper`;
+            editTaskObj(findTaskObj(callerId.charAt(0)));
+            updatePageTaskElements(callerId.charAt(0));
+        }
         taskForm.reset();
         date.value = 'Due date';
-        toggleElementVisibility(addBtnId, false);
-        appendTask();
+        elementVisibility(hiddenElementId, true);
         taskFormContainer.remove();
     }
 }
+
+function removeTaskFromTaskArr(taskId) {
+    const itemIndex = Number(taskId.charAt(0));
+    taskArr.splice(itemIndex, 1);
+}
+
+function removeTaskFromPage(elementId) {
+    document.getElementById(elementId).remove();
+}
+
+function markCompletedTasks(task, container) {
+    const taskObj = findTaskObj(task.id);
+    const editBtn = (`${task.id}-edit`);
+
+    elementVisibility(editBtn, false);
+    task.classList.add('task-completed');
+    container.classList.remove(`${showPriority(taskObj)}`);
+    taskObj.setTaskState(true);
+}
+
+function unmarkTasks(task, container) {
+    const editBtn = (`${task.id}-edit`);
+
+    elementVisibility(editBtn, true);
+    task.classList.remove('task-completed');
+    const taskObj = findTaskObj(task.id);
+    taskObj.setTaskState(false);
+    container.classList.add(`${showPriority(taskObj)}`);
+}
+
+function changeTaskState(event) {
+    const taskcheckBox = event.target.id;
+    const taskId = taskcheckBox.charAt(0);
+    const task = document.getElementById(`${taskId}`);
+    const priorityIndicator = document.getElementById(`${taskId}-pind`);
+    if (event.target.checked) {
+        markCompletedTasks(task, priorityIndicator);
+    } else {
+        unmarkTasks(task, priorityIndicator);
+    }
+}
+function removeTask(taskId) {
+    if (taskId.slice(2) === 'del') {
+        removeTaskFromTaskArr(taskId);
+        removeTaskFromPage(taskId.charAt(0));
+    }
+}
+
+// Edit task 
+function opentaskEditorForm(task) {
+    const taskId = task.id.charAt(0);
+    const callerId = task.id;
+    const taskContainer = document.getElementById(taskId);
+    const taskWrapper = (`${taskId}-wrapper`);
+    console.log(taskId, taskWrapper);
+
+    addTaskFormToPage(taskContainer, taskId);
+    const formAddTaskBtn = document.getElementById('form-add-task-btn');
+    const formCancelBtn = document.getElementById('cancel-btn');
+
+    formAddTaskBtn.dataset.caller = callerId;
+    formCancelBtn.dataset.caller = callerId;
+
+    const taskObj = findTaskObj(taskId);
+    updateFormFields(taskObj);
+    elementVisibility(taskWrapper, false);
+}
+
+function editTaskObj(taskObj) {
+    const taskFormElementsObj = getTaskFormData();
+    console.log(taskObj);
+    taskObj.setHeading(taskFormElementsObj.heading.value);
+    taskObj.setDescription(taskFormElementsObj.description.value);
+    taskObj.setDate(taskFormElementsObj.date.value);
+    taskObj.setPriority(taskFormElementsObj.priority.value);
+    taskObj.setAssignee(taskFormElementsObj.assignee.value);
+}
+
+function updateFormFields(taskObj) {
+    const taskFormElements = getTaskFormData();
+    taskFormElements.heading.value = taskObj.getHeading();
+    taskFormElements.description.value = taskObj.getDescription();
+    taskFormElements.date.value = taskObj.getDate();
+    taskFormElements.priority.value = taskObj.getPriority();
+    taskFormElements.assignee.value = taskObj.getAssignee();
+}
+
+function updatePageTaskElements(taskId) {
+    const formComponentObj = getTaskComponents(taskId);
+    const taskObj = findTaskObj(taskId);
+
+    formComponentObj.heading.textContent = taskObj.getHeading();
+    formComponentObj.description.textContent = taskObj.getDescription();
+    formComponentObj.date.textContent = taskObj.getDate();
+    formComponentObj.priority.textContent = capitalize(taskObj.getPriority());
+    formComponentObj.name.textContent = capitalize(taskObj.getAssignee())
+
+
+}
+
 export function getTasks() {
     return taskArr;
 }
@@ -336,11 +370,10 @@ export default function taskFormController() {
     document.onclick = (event) => {
         const elementId = event.target.id;
         const idLen = elementId.length;
-        const delBtn = document.querySelectorAll('.task-interface-btn');
-        if (elementId[idLen - 1] === 'c') {
+        const taskBtn = document.querySelectorAll('.task-interface-btn');
+        if (elementId[idLen - 1] === 'c' && idLen === 3) { // idLen === 3 because it insure that the id will always refer to checkbox 0-c, 1-c.
             changeTaskState(event);
         }
-
 
         switch (elementId) {
             case 'add-task-btn':
@@ -353,19 +386,18 @@ export default function taskFormController() {
                 renderAssigneeForm();
                 break;
             case 'cancel-btn':
-                closeTaskForm();
+                closeTaskForm(event.target.dataset.caller);
                 break;
             case 'form-add-task-btn':
-                addNewTask();
+                addNewTask(event.target);
                 break;
-
         }
 
-        delBtn.forEach((item) => {
+        taskBtn.forEach((item) => {
             item.onclick = () => {
-                if (item.id.slice(2) === 'del') {
-                    removeTaskFromTaskArr(item.id);
-                    removeTaskFromPage(item.id);
+                removeTask(item.id);
+                if (item.id.slice(2) === 'edit') {
+                    opentaskEditorForm(item);
                 }
             }
         });

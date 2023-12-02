@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
 #main-container  {
     display: flex;
     flex-direction: column;
@@ -13,6 +17,7 @@
     justify-content: flex-start;
     align-items: center;
     width: 70%;
+    min-width: 500px;
 }
 .m-main-heading-container {
     display: flex;
@@ -28,6 +33,9 @@
     color: #424242;
 }
 .task-btn-and-taskform-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     padding: 10px 0;
     width: 100%;
 }

@@ -4,10 +4,10 @@ import dateIcon from '../../assets/icons/calendar.svg';
 import priorityIcon from '../../assets/icons/flag.svg';
 import datePicker from './datepicker';
 import assigneeForm from './assignee-form';
-export default function taskForm() {
+export default function taskForm(taskId) {
     return (
         `
-            <div class="task-form-container">
+            <div class="task-form-container" id="${taskId}-form">
                 <form id="task-form" action="/">
                     <div class="field-container">    
                         <input type="text" id="tkn" class="task-field" spellcheck="true" placeholder="Task" autocomplete="off">
@@ -37,8 +37,8 @@ export default function taskForm() {
                         </div>
                     </div>  
                     <div class="control-btn-container">
-                        <input type="button" id="cancel-btn" class="control-btn" value="Cancel">
-                        <input type="button" id="form-add-task-btn" class="control-btn" value="Add task">
+                        <input type="button" id="cancel-btn" class="control-btn" value="Cancel" data-caller="${taskId}">
+                        <input type="button" id="form-add-task-btn" class="control-btn" value="Add task" data-caller="${taskId}">
                     </div>  
                 </form>
             </div>  
