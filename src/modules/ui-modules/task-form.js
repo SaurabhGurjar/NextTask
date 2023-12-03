@@ -6,7 +6,7 @@ import datePicker from './datepicker';
 import assigneeForm from './assignee-form';
 export default function taskForm(taskId) {
     return (
-        `
+        `   
             <div class="task-form-container" id="${taskId}-form">
                 <form id="task-form" action="/">
                     <div class="field-container">    
