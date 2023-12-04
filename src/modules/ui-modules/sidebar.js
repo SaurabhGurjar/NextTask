@@ -55,7 +55,7 @@ function createHeading(array) {
     let headings = '';
     array.forEach((item) => {
         headings += (
-            `<div class="sd-projects-link-container">
+            `<div class="sd-projects-link-wrapper">
                 <div class="sd-project-color-box"></div>
                 <a id="${item.name.toLowerCase()}" class="sd-links sd-projects-link" href="#">
                     <span class="sd-projects-link-text" id="${item.name.toLowerCase()}">${item.name}</span>
@@ -70,7 +70,7 @@ function createTeamLinkHtml(array) {
     let teams = '';
     array.forEach((item) => {
         teams += (
-            `<div class="sd-team-link-container">
+            `<div class="sd-team-link-wrapper">
                 <div class="sd-team-icon-wrapper">
                     <span class="sd-team-icon">${item.name.toUpperCase()[0]}</span>
                 </div>
@@ -129,15 +129,17 @@ export default function sidebar() {
                             </div>
                             
                             <div class="sd-buttons-interface-btn-wrapper">
-                                <button id="projects" class="interface-btn">
+                                <button id="add-new-project" class="interface-btn">
                                     <img src="${addIcon}" class="sd-icons add-btn">
                                 </button>
-                                <button id="projects" class="dropdown-btn interface-btn">
+                                <button id="dropdown-project-btn" class="dropdown-btn interface-btn">
                                     <img src="${ArrowIcon}" class="sd-icons">
                                 </button>
                             </div>
                         </div>
-                        ${createHeading(getProjects())}
+                        <div class="sd-links-container" id="sd-project-links">
+                            ${createHeading(getProjects())}
+                        </div>
                     </div>
                     <div class="sd-section-wrapper">
                         <div class="sd-heading-wrapper">
@@ -146,15 +148,17 @@ export default function sidebar() {
                                 <span id="team" class="sd-heading-text">Team</span>
                             </div>
                             <div class="sd-buttons-interface-btn-wrapper">
-                                <button id="projects" class="interface-btn">
+                                <button id="add-new-team" class="interface-btn">
                                     <img src="${addIcon}" class="sd-icons add-btn">
                                 </button>
-                                <button id="team" class="dropdown-btn interface-btn">
+                                <button id="dropdown-team-btn" class="dropdown-btn interface-btn">
                                     <img src="${ArrowIcon}" class="sd-icons">
                                 </button>
                             </div>
                         </div>
+                        <div class="sd-links-container" id="sd-team-links">
                         ${createTeamLinkHtml(getTeams())}
+                        </div>
                     </div>
                 </div>
             </div>

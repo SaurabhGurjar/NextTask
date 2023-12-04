@@ -405,7 +405,7 @@ function checkBoxInterFace(event) {
     const idLen = elementId.length;
 
     // idLen === 3 because it insure that the id will always refer to checkbox 0-c, 1-c.
-    if (elementId[idLen - 1] === 'c' && idLen === 3) { 
+    if (elementId[idLen - 1] === 'c' && idLen === 3) {
         changeTaskState(event);
     }
 }
@@ -428,11 +428,9 @@ export function getTasks() {
 }
 
 export default function taskFormController() {
-
     document.onclick = (event) => {
         checkBoxInterFace(event);
         taskFormInterface(event);
         addEventListenerTOTaskInterfaceBtns('task-interface-btn')
     }
-
 }

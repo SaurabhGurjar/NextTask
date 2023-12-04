@@ -36,7 +36,10 @@ const projects = [
     },
     {
         name: 'Instagram post maker'
-    }
+    },
+    {
+        name: 'Youtube video marker'
+    },
 ];
 
 // class project {
@@ -128,10 +131,16 @@ const teams = [
     {
         name: 'Artificial intelligence'
     },
-
     {
         name: 'Data science'
     },
+    {
+        name: 'Social media'
+    },
+    {
+        name: 'Marketing'
+    },
+    
 ];
 
 export function getProjects() {
