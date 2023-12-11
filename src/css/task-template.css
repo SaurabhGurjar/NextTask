@@ -98,11 +98,10 @@
     background-color: rgb(255 16 16 / 40%);
 }
 .priority-low {
-    background-color: rgb(28 247 28 / 40%);
-}
-
-.priority-medium {
     background-color: rgb(58 135 224 / 40%);
+}
+.priority-medium {
+    background-color: rgb(28 247 28 / 40%);
 }
 
 .task-completed {

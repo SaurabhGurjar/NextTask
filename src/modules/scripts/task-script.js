@@ -1,117 +1,13 @@
 import { appendTask } from './showtask';
-import dateScript from './datepicker-script';
-import datePicker from '../ui-modules/datepicker';
 import assigneeForm from '../ui-modules/assignee-form';
 import assigneeScript from './assignee-script';
 import { showPriority } from '../ui-modules/task-template';
 import taskForm from '../ui-modules/task-form';
 import { capitalize } from './stringlib';
+import { getDataTasks, Task } from '../data';
+import { formatDate, dueToday } from './formatDate';
 
-const taskArr = [];
-
-const tasks = [{
-    heading: 'Winter clothings',
-    description: 'Buy Jeans',
-    date: '1 Dec',
-    priority: 'high',
-    assignee: 'saurabh',
-    project: 'Personal',
-    team: 'Personal',
-    completed: true,
-},
-{
-    heading: 'Winter clothings',
-    description: 'Buy Blazers',
-    date: '4 Dec',
-    priority: 'medium',
-    assignee: 'Saurabh',
-}]
-
-
-class Task {
-    constructor(heading, description, date, priority, assignee, project, team, completed) {
-        this.heading = heading;
-        this.description = description;
-        this.date = date;
-        this.priority = priority;
-        this.assignee = assignee;
-        this.project = project;
-        this.team = team;
-        if (completed) {
-            this.completed = true;
-        } else {
-            this.completed = false;
-        }
-    }
-
-    getHeading() {
-        return this.heading;
-    }
-
-    getDescription() {
-        return this.description;
-    }
-
-    getDate() {
-        return this.date;
-    }
-
-    getPriority() {
-        return this.priority;
-    }
-
-    getAssignee() {
-        return this.assignee;
-    }
-
-    getProject() {
-        return this.project;
-    }
-
-    getTeam() {
-        return this.team;
-    }
-
-    getTaskState() {
-        return this.completed;
-    }
-
-    setHeading(heading) {
-        this.heading = heading;
-    }
-
-    setDescription(description) {
-        this.description = description;
-    }
-
-    setDate(date) {
-        this.date = date;
-    }
-
-    setPriority(priority) {
-        this.priority = priority;
-    }
-
-    setAssignee(assignee) {
-        this.assignee = assignee;
-    }
-
-    setProject(project) {
-        this.project = project;
-    }
-
-    setTeam(team) {
-        this.team = team;
-    }
-
-    setTaskState(completed) {
-        this.completed = completed;
-    }
-}
-
-tasks.forEach((item) => {
-    taskArr.push(new Task(item.heading, item.description, item.date, item.priority, item.assignee, item.project, item.team, item.completed))
-});
+const taskArr = getDataTasks();
 
 function getTaskFormData() {
     const heading = document.getElementById('tkn');
@@ -119,7 +15,6 @@ function getTaskFormData() {
     const date = document.getElementById('date');
     const priority = document.getElementById('priority');
     const assignee = document.getElementById('assignee-btn');
-
     return {
         heading,
         description,
@@ -137,7 +32,7 @@ function createNewTask(taskObj) {
 // create a function to check if the task heading or description is empty
 function boolTaskEntered() {
     const taskObj = getTaskFormData();
-    if (taskObj.heading.value !== '' || taskObj.description.value !== '') {
+    if (taskObj.heading.value !== '') {
         return true;
     }
 }
@@ -200,16 +95,16 @@ function renderTaskForm(addBtnId, taskId) {
     elementVisibility(addBtnId, false);
 }
 
-function renderDatePicker() {
-    const dateForm = document.getElementById('date-picker');
-    const datePickerContainer = document.getElementById('dp-container');
+// function renderDatePicker() {
+//     const dateForm = document.getElementById('date-picker');
+//     const datePickerContainer = document.getElementById('dp-container');
 
-    removeBtnInputForms()
-    if (!dateForm) {
-        datePickerContainer.innerHTML = datePicker();
-        dateScript();
-    }
-}
+//     removeBtnInputForms()
+//     if (!dateForm) {
+//         datePickerContainer.innerHTML = datePicker();
+//         dateScript();
+//     }
+// }
 
 function renderAssigneeForm() {
     const isAssigneeFormActive = document.getElementById('assignee-form');
@@ -256,7 +151,7 @@ function addNewTask(element) {
             updatePageTaskElements(callerId.charAt(0));
         }
         taskForm.reset();
-        date.value = 'Due date';
+        // date.value = 'Due date';
         elementVisibility(hiddenElementId, true);
         taskFormContainer.remove();
     }
@@ -318,7 +213,6 @@ function opentaskEditorForm(task) {
     const callerId = task.id;
     const taskContainer = document.getElementById(taskId);
     const taskWrapper = (`${taskId}-wrapper`);
-    console.log(taskId, taskWrapper);
 
     addTaskFormToPage(taskContainer, taskId);
     const formAddTaskBtn = document.getElementById('form-add-task-btn');
@@ -334,7 +228,6 @@ function opentaskEditorForm(task) {
 
 function editTaskObj(taskObj) {
     const taskFormElementsObj = getTaskFormData();
-    console.log(taskObj);
     taskObj.setHeading(taskFormElementsObj.heading.value);
     taskObj.setDescription(taskFormElementsObj.description.value);
     taskObj.setDate(taskFormElementsObj.date.value);
@@ -357,7 +250,7 @@ function updatePageTaskElements(taskId) {
 
     formComponentObj.heading.textContent = taskObj.getHeading();
     formComponentObj.description.textContent = taskObj.getDescription();
-    formComponentObj.date.textContent = taskObj.getDate();
+    formComponentObj.date.textContent = formatDate(taskObj.getDate());
     formComponentObj.priority.textContent = capitalize(taskObj.getPriority());
     formComponentObj.name.textContent = capitalize(taskObj.getAssignee())
     formComponentObj.priorityIndicator.classList.replace(formComponentObj.priorityIndicator.classList[1], `priority-${taskObj.getPriority()}`);
@@ -384,9 +277,6 @@ function taskFormInterface(event) {
         case 'add-task-btn':
             allowSingleFormOnPage();
             renderTaskForm(event.target.id);
-            break;
-        case 'date':
-            renderDatePicker();
             break;
         case 'assignee-btn':
             renderAssigneeForm();
@@ -423,14 +313,18 @@ function allowSingleFormOnPage() {
     }
 }
 
+
+
 export function getTasks() {
     return taskArr;
 }
 
 export default function taskFormController() {
+    console.log(taskArr);
     document.onclick = (event) => {
         checkBoxInterFace(event);
         taskFormInterface(event);
-        addEventListenerTOTaskInterfaceBtns('task-interface-btn')
+        addEventListenerTOTaskInterfaceBtns('task-interface-btn');
+        dueToday('2023-12-11');
     }
 }

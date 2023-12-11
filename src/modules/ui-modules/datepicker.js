@@ -34,21 +34,25 @@ function createYears() {
 
 export default function datePicker() {   
     const daysDefault = 31
-    return `<div class="date-form-container" id="date-picker">
-            <select id="dd" name="day" class="date-fields">
-                <option value="null" disable selected>Day</option>
-                ${createDays(daysDefault)}
-            </select>
-            <select id="mm" name="months" class="date-fields">
-                <option value="null" disable selected>Month</option>
-                ${createMonths()}
-            </select>
-            <select id="yy" name="years" class="date-fields">
-                <option value="null" disable selected>Year</option>
-                ${createYears()}
-            </select>
-            <button id="date-confirm-btn" class="confirm-btn">
-                <img src="${closeIcon}" id="date-confirm-btn-icon">
-            </button>
-    </div>`;
+    return (
+                `
+                    <div class="date-form-container" id="date-picker">
+                        <select id="mm" name="months" class="date-fields">
+                            <option value="null" disable selected>Month</option>
+                            ${createMonths()}
+                        </select>
+                        <select id="dd" name="day" class="date-fields">
+                            <option value="null" disable selected>Day</option>
+                            ${createDays(daysDefault)}
+                        </select>
+                        <select id="yy" name="years" class="date-fields">
+                            <option value="null" disable selected>Year</option>
+                            ${createYears()}
+                        </select>
+                        <button id="date-confirm-btn" class="confirm-btn">
+                            <img src="${closeIcon}" id="date-confirm-btn-icon">
+                        </button>
+                    </div>
+                `
+            );
 }

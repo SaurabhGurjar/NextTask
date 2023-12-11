@@ -17,6 +17,8 @@ import upcomingIcon from '../../assets/icons/upcoming.svg';
 import ArrowIcon from '../../assets/icons/arrow.svg';
 import LOGO from '../../assets/icons/logo.svg';
 
+import { strip } from '../scripts/stringlib';
+
 // Sidebar links
 const defaultTabs = [{
     name: 'Inbox',
@@ -35,18 +37,19 @@ const defaultTabs = [{
 }
 ];
 
-function createlink(link) {
-    return `<a href="#" class="sd-links" id="${link.name.toLowerCase()}-tab">${link.name}</a>`;
+
+function createlink(link, section) {
+    return `<a href="#" class="sd-${section}-links sd-links" id="${strip(link.name.toLowerCase())}-tab">${link.name}</a>`;
 }
 
 function createIconElement(link) {
-    return `<img src="${link.icon}" id="${link.name.toLowerCase()}-icon" class="sd-icons">`;
+    return `<img src="${link.icon}" id="${strip(link.name.toLowerCase())}-icon" class="sd-icons">`;
 }
 
-function createLinksHtml(links) {
+function createLinksHtml(links, section) {
     let sdHtml = '';
     links.forEach((item) => {
-        sdHtml += `<div class="sd-link-wrapper">${createIconElement(item) + createlink(item)}</div>`;
+        sdHtml += `<div class="sd-link-wrapper">${createIconElement(item) + createlink(item, section)}</div>`;
     });
     return sdHtml;
 }
@@ -54,12 +57,11 @@ function createLinksHtml(links) {
 function createHeading(array) {
     let headings = '';
     array.forEach((item) => {
+        if (item === 'general' || item === 'private') return;
         headings += (
             `<div class="sd-projects-link-wrapper">
                 <div class="sd-project-color-box"></div>
-                <a id="${item.name.toLowerCase()}" class="sd-links sd-projects-link" href="#">
-                    <span class="sd-projects-link-text" id="${item.name.toLowerCase()}">${item.name}</span>
-                </a>
+                <a id="${strip(item.toLowerCase())}" class="sd-projects-link sd-links" href="#">${item}</a>
             </div>`
         );
     });
@@ -69,14 +71,13 @@ function createHeading(array) {
 function createTeamLinkHtml(array) {
     let teams = '';
     array.forEach((item) => {
+        if (item.name === 'general' || item.name === 'private') return;
         teams += (
             `<div class="sd-team-link-wrapper">
                 <div class="sd-team-icon-wrapper">
                     <span class="sd-team-icon">${item.name.toUpperCase()[0]}</span>
                 </div>
-                <a id="${item.name.toLowerCase()}" class="sd-links sd-team-link" href="#">
-                    <span class="sd-team-link-text" id="${item.name.toLowerCase()}">${item.name}</span>
-                </a>
+                <a id="${strip(item.name.toLowerCase())}" class="sd-links sd-team-link" href="#">${item.name}</a>
             </div>
         `);
     });
@@ -98,7 +99,7 @@ function parseData() {
     projects.forEach((item) => {
 
     });
-    console.log(getTeams());
+    // console.log(getTeams());
 }
 
 parseData();
@@ -119,7 +120,7 @@ export default function sidebar() {
                 </div>
                 <div class="sd-main">
                     <div class="sd-section-wrapper">
-                        ${createLinksHtml(defaultTabs)}
+                        ${createLinksHtml(defaultTabs, 'top')}
                     </div>
                     <div class="sd-section-wrapper">
                         <div class="sd-heading-wrapper">
@@ -163,7 +164,7 @@ export default function sidebar() {
                 </div>
             </div>
             <div class="sd-footer">
-                ${createLinksHtml(sidebarFooter)}
+                ${createLinksHtml(sidebarFooter, 'footer')}
             </div>
         </div>
     `);

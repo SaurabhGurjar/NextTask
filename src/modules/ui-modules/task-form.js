@@ -1,23 +1,22 @@
 import '../../css/task-form.css';
+
 import assigneeIcon from '../../assets/icons/person.svg';
 import dateIcon from '../../assets/icons/calendar.svg';
 import priorityIcon from '../../assets/icons/flag.svg';
-import datePicker from './datepicker';
-import assigneeForm from './assignee-form';
+
 export default function taskForm(taskId) {
     return (
         `   
             <div class="task-form-container" id="${taskId}-form">
                 <form id="task-form" action="/">
                     <div class="field-container">    
-                        <input type="text" id="tkn" class="task-field" spellcheck="true" placeholder="Task" autocomplete="off">
-                        <input type="text" id="tkd" class="task-field" spellcheck="true" placeholder="Description" autocomplete="off">
+                        <input type="text" id="tkn" class="task-field" spellcheck="true" placeholder="Task" autocomplete="off" maxlength="50">
+                        <input type="text" id="tkd" class="task-field" spellcheck="true" placeholder="Description" autocomplete="off" maxlength="100">
                     </div>
                     <div class="task-btn-container">
                         <div class="task-btn-wrapper" id="date-btn-container">    
                             <img src="${dateIcon}" id="date-icon" class="btn-icon"> 
-                            <input type="button" id="date" class="task-btn" value="Due date">
-                            <div id="dp-container"></div>
+                            <input type="date" id="date" class="task-btn">
                         </div>    
                         <div class="task-btn-wrapper">
                             <img src="${priorityIcon}" id="priority-icon" class="btn-icon"> 

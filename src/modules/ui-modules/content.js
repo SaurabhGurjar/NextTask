@@ -1,7 +1,8 @@
 import '../../css/content.css';
+
 import addIcon from '../../assets/icons/invite.svg';
-import taskForm from './task-form';
-import { tasksHTML } from '../scripts/showtask.js';
+import { getDataTasks } from '../data.js';
+import { getTasksHTML } from '../scripts/showtask.js';
 
 export default function content() {
     return (`
@@ -11,7 +12,7 @@ export default function content() {
                     <span class="m-main-heading-text" id="mhd">Inbox</span>
                 </div>
                 <div class="m-task-container" id="tasks">
-                    ${tasksHTML()}
+                    ${getTasksHTML(getDataTasks())}
                     </div>
                 <div class="task-btn-and-taskform-container" id="tb-tf-container">
                     <button id="add-task-btn" class="add-task-btn">
