@@ -3,8 +3,8 @@ import assigneeForm from '../ui-modules/assignee-form';
 import assigneeScript from './assignee-script';
 import { showPriority } from '../ui-modules/task-template';
 import taskForm from '../ui-modules/task-form';
-import { capitalize } from './stringlib';
-import { getDataTasks, Task } from '../data';
+import { capitalize, getNumFromStr } from './stringlib';
+import { getDataTasks, Task, } from '../data';
 import { formatDate, dueToday } from './formatDate';
 
 const taskArr = getDataTasks();
@@ -31,8 +31,8 @@ function createNewTask(taskObj) {
 
 // create a function to check if the task heading or description is empty
 function boolTaskEntered() {
-    const taskObj = getTaskFormData();
-    if (taskObj.heading.value !== '') {
+    const taskFormDataObj = getTaskFormData();
+    if (taskFormDataObj.heading.value !== '' && taskFormDataObj.date.value !== '') {
         return true;
     }
 }
@@ -120,12 +120,11 @@ function closeTaskForm(callerId) {
     const taskFormContainer = document.querySelector('.task-form-container');
     const formId = callerId;
     taskFormContainer.remove();
-    console.log(callerId);
     if (formId === 'new-task-btn') {
         const addBtnId = 'add-task-btn';
         elementVisibility(addBtnId, true);
-    } else if (formId.slice(2) === 'edit' || formId.slice(2) === 'form') {
-        const taskWrapper = (`${formId.charAt(0)}-wrapper`);
+    } else if (formId.slice(-4) === 'edit' || formId.slice(-4) === 'form') {
+        const taskWrapper = (`${getNumFromStr(formId)}-wrapper`);
         elementVisibility(taskWrapper, true);
     }
     removeBtnInputForms()
@@ -145,10 +144,10 @@ function addNewTask(element) {
             const tasksContainer = document.getElementById('tasks');
             taskArr.push(createNewTask(getTaskFormData()));
             appendTask(taskId, findTaskObj(taskId), tasksContainer);
-        } else if (callerId.slice(2) === 'edit') {
-            hiddenElementId = `${callerId.charAt(0)}-wrapper`;
-            editTaskObj(findTaskObj(callerId.charAt(0)));
-            updatePageTaskElements(callerId.charAt(0));
+        } else if (callerId.slice(-4) === 'edit') {
+            hiddenElementId = `${getNumFromStr(callerId)}-wrapper`;
+            editTaskObj(findTaskObj(getNumFromStr(callerId)));
+            updatePageTaskElements(getNumFromStr(callerId));
         }
         taskForm.reset();
         // date.value = 'Due date';
@@ -158,7 +157,7 @@ function addNewTask(element) {
 }
 
 function removeTaskFromTaskArr(taskId) {
-    const itemIndex = Number(taskId.charAt(0));
+    const itemIndex = getNumFromStr(taskId);
     taskArr.splice(itemIndex, 1);
 }
 
@@ -174,7 +173,6 @@ function markCompletedTasks(task, container) {
     task.classList.add('task-completed');
     container.classList.remove(`${showPriority(taskObj)}`);
     taskObj.setTaskState(true);
-    console.log(taskObj);
 
 }
 
@@ -186,12 +184,11 @@ function unmarkTasks(task, container) {
     task.classList.remove('task-completed');
     taskObj.setTaskState(false);
     container.classList.add(`${showPriority(taskObj)}`);
-    console.log(taskObj);
 }
 
 function changeTaskState(event) {
     const taskcheckBox = event.target.id;
-    const taskId = taskcheckBox.charAt(0);
+    const taskId = getNumFromStr(taskcheckBox);
     const task = document.getElementById(`${taskId}`);
     const priorityIndicator = document.getElementById(`${taskId}-pind`);
     if (event.target.checked) {
@@ -201,15 +198,15 @@ function changeTaskState(event) {
     }
 }
 function removeTask(taskId) {
-    if (taskId.slice(2) === 'del') {
+    if (taskId.slice(-3) === 'del') {
         removeTaskFromTaskArr(taskId);
-        removeTaskFromPage(taskId.charAt(0));
+        removeTaskFromPage(getNumFromStr(taskId));
     }
 }
 
 // Edit task 
 function opentaskEditorForm(task) {
-    const taskId = task.id.charAt(0);
+    const taskId = getNumFromStr(task.id);
     const callerId = task.id;
     const taskContainer = document.getElementById(taskId);
     const taskWrapper = (`${taskId}-wrapper`);
@@ -263,7 +260,7 @@ function addEventListenerTOTaskInterfaceBtns(elementClass) {
     taskBtn.forEach((item) => {
         item.onclick = () => {
             removeTask(item.id);
-            if (item.id.slice(2) === 'edit') {
+            if (item.id.slice(-4) === 'edit') {
                 allowSingleFormOnPage();
                 opentaskEditorForm(item);
             }
@@ -320,11 +317,9 @@ export function getTasks() {
 }
 
 export default function taskFormController() {
-    console.log(taskArr);
     document.onclick = (event) => {
         checkBoxInterFace(event);
         taskFormInterface(event);
         addEventListenerTOTaskInterfaceBtns('task-interface-btn');
-        dueToday('2023-12-11');
     }
 }

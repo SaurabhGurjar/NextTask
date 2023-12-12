@@ -331,7 +331,9 @@ export class Task {
     }
 }
 
-
+export function sortTasksDateWiseAsc (tasks) {
+    return tasks.toSorted((a, b) => Number(a.date.split('-')[2]) - Number(b.date.split('-')[2]));
+}
 export function getDataTasks() {
     const tasks = [];
     data.forEach((team) => {
@@ -355,7 +357,7 @@ export function getPrivateTask() {
             })
         });
     });
-    return tasks;
+    return sortTasksDateWiseAsc(tasks);
 }
 
 export function getTodayTask() {
@@ -383,7 +385,7 @@ export function getUpcomingTask() {
             });
         })
     });
-    return tasks;
+    return sortTasksDateWiseAsc(tasks);
 }
 export function getProjectTask (projectId) {
     const projectName = document.getElementById(projectId).textContent;
@@ -396,7 +398,7 @@ export function getProjectTask (projectId) {
             });
         })
     });
-    return tasks;
+    return sortTasksDateWiseAsc(tasks);
 }
 export function getProjects() {
     const projects = [];
