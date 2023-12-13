@@ -9,7 +9,7 @@ body {
 }
 #root {
     display: grid;
-    grid-template-columns: 1fr 4.5fr;
+    grid-template-rows: 4rem auto;
+    grid-template-columns: 1fr 5fr;
     height: 100vh;
-    justify-content: center;
 }

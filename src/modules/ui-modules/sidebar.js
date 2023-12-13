@@ -15,7 +15,6 @@ import todayIcon from '../../assets/icons/today.svg';
 import teamIcon from '../../assets/icons/team.svg';
 import upcomingIcon from '../../assets/icons/upcoming.svg';
 import ArrowIcon from '../../assets/icons/arrow.svg';
-import LOGO from '../../assets/icons/logo.svg';
 
 import { strip } from '../scripts/stringlib';
 
@@ -115,9 +114,6 @@ export default function sidebar() {
         `
         <div class="sidebar">
             <div class="top-section">
-                <div class="logo-wrapper">
-                    <span id="logo-text">NextTask</span><img src="${LOGO}" id="logo-icon" alt="NT">
-                </div>
                 <div class="sd-main">
                     <div class="sd-section-wrapper">
                         ${createLinksHtml(defaultTabs, 'top')}

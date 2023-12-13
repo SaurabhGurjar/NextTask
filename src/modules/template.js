@@ -5,8 +5,7 @@ import content from './ui-modules/content.js';
 
 const main = document.createElement('div');
 main.id = 'root';
-
-main.innerHTML = `${sidebar()} ${content()}`;
+main.innerHTML = `${header()} ${sidebar()} ${content()}`;
 export default function page () {
     return main;
 }

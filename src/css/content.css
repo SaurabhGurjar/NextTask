@@ -1,35 +1,24 @@
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
-
-/* Track
-::-webkit-scrollbar-track {
-    border-radius: 10px;
-}
-
-/* Track on hover 
-::-webkit-scrollbar-track:hover {
-    background: #cacaca;
-} */
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: none;
     border-radius: 10px;
-    height: 20px;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+#main-container:hover::-webkit-scrollbar-thumb {
     background: #949aa1;
 }
-
 #main-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding: 1rem 4rem;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
     gap: 10px;
     overflow-y: scroll;
 }
@@ -39,20 +28,22 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 70%;
+    width: 80%;
     min-width: 500px;
 }
 
 .m-main-heading-container {
     display: flex;
-    padding: 50px 0 0 0;
     width: 100%;
     padding-bottom: 10px;
-    border-bottom: 1px solid #DBDFEA;
 }
 
 .m-task-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     width: 100%;
+    margin: 10px 0;
 }
 
 .m-main-heading-text {
@@ -75,16 +66,18 @@
     align-items: center;
     border: none;
     background: none;
-    gap: 0.3em;
+    gap: 0.2em;
     color: #213555;
     font-weight: 600;
-    padding: 0.3em 0.4em;
+    padding: 8px 10px;
     cursor: pointer;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 1px rgba(66, 66, 66, 0.2);
 }
 
 #add-task-btn:hover {
-    outline: 1px solid #213555;
-    border-radius: 0.2em;
+    outline: 2px solid #ACB1D6;
 }
 
 .m-add-task-btn-icon {

@@ -1,4 +1,5 @@
 import '../../css/task-template.css';
+import '../../css/header.css';
 
 import calIcon from '../../assets/icons/task-cal.svg';
 import personIcon from '../../assets/icons/person.svg';

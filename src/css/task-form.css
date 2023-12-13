@@ -1,9 +1,10 @@
 .task-form-container {
     display: flex;
     flex-direction: column;
-    border-radius: 0.6rem;
-    border: 1px solid #9496a0;
     width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 1px rgba(66, 66, 66, 0.4);
 }
 
 #task-form {

@@ -4,48 +4,60 @@
     align-items: flex-start;
     justify-content: center;
     gap: 6px;
-    padding: 15px 0;
-    border-bottom: 1px solid #DBDFEA;
-    margin: 10px 0 0 0;
     width: 100%;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 1px rgba(66, 66, 66, 0.2);
+    padding: 8px 10px;
 }
+
+.task-container:hover {
+    outline: 2px solid #ACB1D6;
+} 
+
 .task-wrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 6px;
-    padding: 15px 0;
+    gap: 10px;
     width: 100%;
 }
+
 .task-cbox:checked {
     .task-heading {
         text-decoration: line-through;
     }
 }
+
 .checkbox-heading-interface-btn-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
+
 .task-edit-del-btn-container {
     display: flex;
     gap: 5px;
     justify-content: flex-end;
 }
+
 .d-p-pi-contianer {
     display: flex;
     justify-content: center;
     padding-left: 8px;
     width: 100%;
 }
+
 .date-description-container {
     display: flex;
     justify-content: space-between;
     align-self: center;
     width: 100%;
 }
+
 .date-description-wrapper {
     display: flex;
     flex-direction: column;
@@ -65,6 +77,7 @@
 .task-interface-btn:hover {
     background-color: #DBDFEA;
 }
+
 .priority-assignee-wrappper {
     display: flex;
     flex-direction: column;
@@ -73,11 +86,17 @@
     gap: 5px;
     padding-right: 8px;
 }
+
+.task-heading {
+    max-width: 350px;
+}
 .task-description,
 .task-priority {
     font-size: 13px;
+    max-width: 350px;
 }
-.task-date, 
+
+.task-date,
 .task-name-wrapper {
     display: flex;
     gap: 0.7em;
@@ -85,6 +104,7 @@
     justify-content: flex-start;
     font-size: 13px;
 }
+
 .task-date-icon {
     width: 1rem;
 }
@@ -97,9 +117,11 @@
 .priority-high {
     background-color: rgb(255 16 16 / 40%);
 }
+
 .priority-low {
     background-color: rgb(58 135 224 / 40%);
 }
+
 .priority-medium {
     background-color: rgb(28 247 28 / 40%);
 }
@@ -110,4 +132,3 @@
     padding: 15px 10px !important;
     color: rgb(64 64 64 / 50%)
 }
-
