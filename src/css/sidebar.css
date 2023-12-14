@@ -145,7 +145,7 @@
     padding: 0.18rem;
 }
 .interface-btn:hover {
-    background: #fff;
+    outline: 1px solid rgba(66, 66, 66, 0.2);
 }
 
 .sd-sub-project-link {

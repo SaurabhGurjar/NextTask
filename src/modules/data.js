@@ -379,7 +379,7 @@ export function getUpcomingTask() {
     data.forEach((team) => {
         team.projects.subTeams.forEach((subteam) => {
             subteam.subTasks.forEach((item) => {
-                if(item.dueDate.split('-').map((item) => parseInt(item))[2] < nextSevenDate) {
+                if(item.dueDate.split('-').map((item) => parseInt(item))[2] > todayDate() && item.dueDate.split('-').map((item) => parseInt(item))[2] < nextSevenDate) {
                     tasks.push(new Task(item.heading, item.description, item.dueDate, item.priority, item.assignee, item.status, item.completed, undefined, undefined, item.isPrivate));
                 }
             });

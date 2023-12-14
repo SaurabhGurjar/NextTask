@@ -1,0 +1,139 @@
+:root {
+    position: relative;
+
+}
+body {
+    position: relative;
+}
+.overlay {
+    position: absolute;
+    background-color: rgba(66, 66, 66, 0.1);
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+}
+.project-form-container, 
+.team-form-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    top: 35%;
+    width: 50%;
+    max-width: 600px;
+    gap: 10px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 1px rgba(66, 66, 66, 0.2);
+    z-index: 30;
+}
+
+
+.pform-heading-container,
+.tform-heading-container {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid rgba(66, 66, 66, 0.2);
+}
+
+.pform-heading,
+.tform-heading {
+    display: flex;
+    padding: 15px 20px;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 900;
+}
+
+#pform,
+#tform {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.pform-field-container,
+.tform-field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+}
+
+#pname,
+#tname {
+    padding: 8px;
+    outline: 1px solid rgba(66, 66, 66, 0.2);
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+}
+
+#pname:focus,
+#tname:focus {
+    outline: 2px solid rgba(66, 66, 66, 0.2);
+}
+
+.project-form-btn-container,
+.team-form-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(66, 66, 66, 0.2);
+    padding: 15px 20px; 
+}
+.team-form-btn-container {
+    justify-content: flex-end !important;
+}
+.pform-btn-container,
+.tform-btn-container {
+    display: flex;
+    gap: 20px;
+
+}
+.pform-btns,
+.tform-btns {
+    display: flex;
+    padding: 8px 15px;
+    border-radius: 8px;
+    background: none;
+    border: none;
+    outline: 1px solid rgba(66, 66, 66, 0.2);
+    color: #3f3f3f;
+}
+
+#pf-cancel:hover,
+#tf-cancel:hover  {
+    background-color: #DBDFEA;
+    outline: none;
+    color: #000;
+}
+
+#pf-add,
+#tf-add {
+    background-color: rgba(172, 177, 214, 0.5);
+}
+
+#pf-add:hover,
+#tf-add:hover {
+    background-color: #8294C4;
+    color: #FFF;
+    outline: none;
+}
+
+.team-selector-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    padding: 4px;
+    outline: 1px solid rgba(66, 66, 66, 0.2);
+}
+
+#pform-team-selector {
+    border: none;
+    background: none;
+    outline: none;
+}

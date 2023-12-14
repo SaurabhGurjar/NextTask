@@ -4,8 +4,9 @@ import assigneeScript from './assignee-script';
 import { showPriority } from '../ui-modules/task-template';
 import taskForm from '../ui-modules/task-form';
 import { capitalize, getNumFromStr } from './stringlib';
-import { getDataTasks, Task, } from '../data';
+import { getDataTasks, getProjectTask, Task, } from '../data';
 import { formatDate, dueToday } from './formatDate';
+import  addProjectEvent from './project-form-script';
 
 const taskArr = getDataTasks();
 
@@ -25,7 +26,7 @@ function getTaskFormData() {
 }
 
 function createNewTask(taskObj) {
-    const task = new Task(taskObj.heading.value, taskObj.description.value, taskObj.date.value, taskObj.priority.value, taskObj.assignee.value);
+    const task = new Task(taskObj.heading.value.toLowerCase(), taskObj.description.value.toLowerCase(), taskObj.date.value, taskObj.priority.value, taskObj.assignee.value.toLowerCase());
     return task;
 }
 
@@ -321,5 +322,6 @@ export default function taskFormController() {
         checkBoxInterFace(event);
         taskFormInterface(event);
         addEventListenerTOTaskInterfaceBtns('task-interface-btn');
+        addProjectEvent(event);
     }
 }

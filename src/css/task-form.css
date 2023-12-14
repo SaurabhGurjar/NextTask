@@ -71,7 +71,7 @@
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
-    border-top: 1px solid #9496a0;
+    border-top: 1px solid rgba(66, 66, 66, 0.2);
     padding: 10px;
 
 }
@@ -81,23 +81,30 @@
     justify-content: center;
     align-items: center;
     padding: 0.7em 0.9em;
-    border-radius: 0.3rem;
+    border-radius: 10px;
     border: none;
     color: #3f3f3f;
     font-weight: 900;
+    background: none;
+    outline: 1px solid rgba(66, 66, 66, 0.2);
+
 }
 
 .control-btn:hover {
     background-color: #DBDFEA;
+    outline: none;
+
 }
 
 #form-add-task-btn {
-    background-color: #ACB1D6;
-    color: #fff;
+    background: rgba(172, 177, 214, 0.5);
+    color: #3f3f3f;
 }
 
 #form-add-task-btn:hover {
     background-color: #8294C4;
+    color: #FFF;
+    border: none;
 }
 
 /* Date picker */
