@@ -126,8 +126,8 @@ export default function sidebar() {
                             </div>
                             
                             <div class="sd-buttons-interface-btn-wrapper">
-                                <button id="add-new-project" class="interface-btn">
-                                    <img src="${addIcon}" class="sd-icons add-btn">
+                                <button id="add-new-project" class="interface-btn" data-fcid="PFC">
+                                    <img src="${addIcon}" class="sd-icons add-btn" data-btnid="add-new-project" data-fcid="PFC">
                                 </button>
                                 <button id="dropdown-project-btn" class="dropdown-btn interface-btn">
                                     <img src="${ArrowIcon}" class="sd-icons">
@@ -145,8 +145,8 @@ export default function sidebar() {
                                 <span id="team" class="sd-heading-text">Team</span>
                             </div>
                             <div class="sd-buttons-interface-btn-wrapper">
-                                <button id="add-new-team" class="interface-btn">
-                                    <img src="${addIcon}" class="sd-icons add-btn">
+                                <button id="add-new-team" class="interface-btn" data-fcid="TFC">
+                                    <img src="${addIcon}" class="sd-icons add-btn" data-btnId="add-new-team" data-fcid="TFC">
                                 </button>
                                 <button id="dropdown-team-btn" class="dropdown-btn interface-btn">
                                     <img src="${ArrowIcon}" class="sd-icons">

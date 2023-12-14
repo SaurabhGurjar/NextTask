@@ -3,11 +3,12 @@ import '../../css/content.css';
 import addIcon from '../../assets/icons/invite.svg';
 import { getDataTasks } from '../data.js';
 import { getTasksHTML } from '../scripts/showtask.js';
+import  projectForm  from './project-form.js';
 
 export default function content() {
     return (`
         <div id="main-container">
-            <div class="m-content">
+            <div class="m-content" id="mc">
                 <div class="m-main-heading-container">
                     <span class="m-main-heading-text" id="mhd">Inbox</span>
                 </div>
@@ -19,7 +20,6 @@ export default function content() {
                         <img src="${addIcon}" class="m-add-task-btn-icon">
                         New task
                     </button>
-                    
                 </div>
             </div>
         </div>

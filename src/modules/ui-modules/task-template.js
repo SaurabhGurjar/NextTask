@@ -1,5 +1,4 @@
 import '../../css/task-template.css';
-import '../../css/header.css';
 
 import calIcon from '../../assets/icons/task-cal.svg';
 import personIcon from '../../assets/icons/person.svg';
@@ -39,7 +38,7 @@ export default function taskTemplate(taskId, taskObj) {
                     <div class="checkbox-heading-interface-btn-container" id="${taskId}-chc">
                         <div class="checkbox-heading-btn-container">
                             <input type="checkbox" id="${taskId}-c" class="task-cbox" ${check}>
-                            <span id="${taskId}-h" class="task-heading">${taskObj.getHeading()}</span>
+                            <span id="${taskId}-h" class="task-heading">${capitalize(taskObj.getHeading())}</span>
                         </div>
                         <div class="task-edit-del-btn-container">
                             <button class="task-interface-btn" id="${taskId}-edit" style="display: ${display}"><img src="${editIcon}" class="task-date-icon"></button>
@@ -50,7 +49,7 @@ export default function taskTemplate(taskId, taskObj) {
                         <div class="priority-indicator ${showPriority(taskObj)} " id="${taskId}-pind"></div>
                         <div class="date-description-container">
                             <div class="date-description-wrapper">
-                                <span id="${taskId}-d" class="task-description">${taskObj.getDescription()}</span>
+                                <span id="${taskId}-d" class="task-description">${capitalize(taskObj.getDescription())}</span>
                                 <span id="${taskId}-date" class="task-date"><img src="${calIcon}" class="task-date-icon">${formatDate(taskObj.getDate())}</span>
                             </div>
                             <div class="priority-assignee-wrappper">
