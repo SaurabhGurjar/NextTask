@@ -1,6 +1,6 @@
 import '../../css/project-form.css';
 import { capitalize } from '../scripts/stringlib';
-import { getTeams } from '../data';
+import { teamsArr } from '../data';
 
 function createTeamOption (teams) {
    const teamOption = [];
@@ -17,7 +17,7 @@ export default function projectForm() {
             <div class="pform-heading-container">
                 <span class="pform-heading">Add Project</span>
             </div>
-            <form action="" id="pform">
+            <form id="pform">
                 <div class="pform-field-container">
                     <label for="pname">Name</label>
                     <input type="text" name="pf-name" id="pname" autocomplete="off" required maxlength="50">
@@ -28,7 +28,7 @@ export default function projectForm() {
                             <option value="Teams">Teams</option>
                             <option value="private">Private</option>
                             <option value="general">General</option>
-                            ${createTeamOption(getTeams())}
+                            ${createTeamOption(teamsArr)}
                         </select>
                     </div>
                     <div class="pform-btn-container">

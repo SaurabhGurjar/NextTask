@@ -4,11 +4,10 @@ import assigneeScript from './assignee-script';
 import { showPriority } from '../ui-modules/task-template';
 import taskForm from '../ui-modules/task-form';
 import { capitalize, getNumFromStr } from './stringlib';
-import { getDataTasks, getProjectTask, Task, } from '../data';
+import { Task, taskArr, projectsArr } from '../data';
 import { formatDate, dueToday } from './formatDate';
-import  addProjectEvent from './project-form-script';
-
-const taskArr = getDataTasks();
+import addProjectEvent from './project-form-script';
+import { sidebarEvents, removeTaskFromProject } from './project-script';
 
 function getTaskFormData() {
     const heading = document.getElementById('tkn');
@@ -16,19 +15,37 @@ function getTaskFormData() {
     const date = document.getElementById('date');
     const priority = document.getElementById('priority');
     const assignee = document.getElementById('assignee-btn');
+    const project = document.getElementById('project-selector');
     return {
         heading,
         description,
         date,
         priority,
-        assignee
+        assignee,
+        project,
     }
 }
 
+function addNewTaskToProject (projectId, taskId) {
+    if(projectId === 'p' || projectId === 'g') return;
+    projectsArr[projectId].addTask(taskId);
+}
+
 function createNewTask(taskObj) {
-    const task = new Task(taskObj.heading.value.toLowerCase(), taskObj.description.value.toLowerCase(), taskObj.date.value, taskObj.priority.value, taskObj.assignee.value.toLowerCase());
+    const task = new Task(
+        Task.assignId(),
+        taskObj.heading.value.toLowerCase(),
+        taskObj.description.value.toLowerCase(),
+        taskObj.date.value, 
+        taskObj.priority.value,
+        taskObj.assignee.value.toLowerCase(),
+        Number(taskObj.project.value) || taskObj.project.value,
+    );
+
+    addNewTaskToProject(task.getProjectId(), task.getId());
     return task;
 }
+
 
 // create a function to check if the task heading or description is empty
 function boolTaskEntered() {
@@ -76,7 +93,22 @@ function getTaskComponents(taskId) {
         priority,
         name,
     }
+}
 
+function setProjectFieldOnTaskForm(taskId) {
+    const projectSelector = document.getElementById('project-selector');
+    let pageId = '';
+    if (taskId === 'new-task-btn') {
+        pageId = document.getElementById('mhd').dataset.pageid;
+        if (pageId === 't' || pageId === 'u' || pageId === 'g') {
+            pageId = 'g';
+        } else if (pageId === 'p') {
+            pageId = 'p';
+        } else {
+            pageId = getNumFromStr(pageId);
+        }
+    }
+    projectSelector.value = pageId;
 }
 
 function elementVisibility(elementId, visible) {
@@ -93,6 +125,7 @@ function renderTaskForm(addBtnId, taskId) {
         taskId = 'new-task-btn';
     }
     addTaskFormToPage(taskFormContainer, taskId);
+    setProjectFieldOnTaskForm(taskId)
     elementVisibility(addBtnId, false);
 }
 
@@ -117,15 +150,18 @@ function renderAssigneeForm() {
     }
 }
 
-function closeTaskForm(callerId) {
+export function closeTaskForm(callerId) {
     const taskFormContainer = document.querySelector('.task-form-container');
+    const taskForm = document.getElementById('task-form');
     const formId = callerId;
-    taskFormContainer.remove();
-    if (formId === 'new-task-btn') {
+
+    if (taskForm) taskFormContainer.remove();
+
+    if (formId === 'new-task-btn' || !formId) {
         const addBtnId = 'add-task-btn';
         elementVisibility(addBtnId, true);
-    } else if (formId.slice(-4) === 'edit' || formId.slice(-4) === 'form') {
-        const taskWrapper = (`${getNumFromStr(formId)}-wrapper`);
+    } else if (formId.split('-')[1] === 'edit' || formId.split('-')[2] === 'form') {
+        const taskWrapper = (`${getNumFromStr(formId)}-tk-wrapper`);
         elementVisibility(taskWrapper, true);
     }
     removeBtnInputForms()
@@ -145,8 +181,8 @@ function addNewTask(element) {
             const tasksContainer = document.getElementById('tasks');
             taskArr.push(createNewTask(getTaskFormData()));
             appendTask(taskId, findTaskObj(taskId), tasksContainer);
-        } else if (callerId.slice(-4) === 'edit') {
-            hiddenElementId = `${getNumFromStr(callerId)}-wrapper`;
+        } else if (callerId.split('-')[1] === 'edit') {
+            hiddenElementId = `${getNumFromStr(callerId)}-tk-wrapper`;
             editTaskObj(findTaskObj(getNumFromStr(callerId)));
             updatePageTaskElements(getNumFromStr(callerId));
         }
@@ -157,40 +193,61 @@ function addNewTask(element) {
     }
 }
 
-function removeTaskFromTaskArr(taskId) {
-    const itemIndex = getNumFromStr(taskId);
-    taskArr.splice(itemIndex, 1);
+export function removeTaskFromTaskArr(taskIndex) {
+    if (taskArr.length > 0) {
+        taskArr.splice(taskIndex, 1);
+    } else {
+        taskArr.pop();
+    }
 }
 
 function removeTaskFromPage(elementId) {
-    document.getElementById(elementId).remove();
+    document.getElementById(`${elementId}-tk`).remove();
+}
+
+function removeTask(element) {
+    if (element.id.split('-')[1] === 'del') {
+        const id = getNumFromStr(element.dataset.taskid);
+        
+        taskArr.forEach((item, index) => {
+            if (item.getId() === id) {
+                removeTaskFromTaskArr(index);
+                if (item.getProjectId() !== 'p' && item.getProjectId() !== 'g') {
+                    removeTaskFromProject(item.getProjectId(), id);
+                } 
+            }
+        });
+        removeTaskFromPage(getNumFromStr(element.id));
+    }
 }
 
 function markCompletedTasks(task, container) {
-    const taskObj = findTaskObj(task.id);
-    const editBtn = (`${task.id}-edit`);
+    const id = getNumFromStr(task.id);
+    const taskObj = findTaskObj(id);
+    const editBtn = (`${id}-edit`);
 
     elementVisibility(editBtn, false);
     task.classList.add('task-completed');
     container.classList.remove(`${showPriority(taskObj)}`);
-    taskObj.setTaskState(true);
+    taskObj.setCompleted(true);
 
 }
 
 function unmarkTasks(task, container) {
-    const taskObj = findTaskObj(task.id);
-    const editBtn = (`${task.id}-edit`);
+    const id = getNumFromStr(task.id);
+    const taskObj = findTaskObj(id);
+    const editBtn = (`${id}-edit`);
 
     elementVisibility(editBtn, true);
     task.classList.remove('task-completed');
-    taskObj.setTaskState(false);
+    taskObj.setCompleted(false);
     container.classList.add(`${showPriority(taskObj)}`);
 }
 
 function changeTaskState(event) {
     const taskcheckBox = event.target.id;
     const taskId = getNumFromStr(taskcheckBox);
-    const task = document.getElementById(`${taskId}`);
+    const task = document.getElementById(`${taskId}-tk`);
     const priorityIndicator = document.getElementById(`${taskId}-pind`);
     if (event.target.checked) {
         markCompletedTasks(task, priorityIndicator);
@@ -198,21 +255,16 @@ function changeTaskState(event) {
         unmarkTasks(task, priorityIndicator);
     }
 }
-function removeTask(taskId) {
-    if (taskId.slice(-3) === 'del') {
-        removeTaskFromTaskArr(taskId);
-        removeTaskFromPage(getNumFromStr(taskId));
-    }
-}
 
 // Edit task 
-function opentaskEditorForm(task) {
-    const taskId = getNumFromStr(task.id);
-    const callerId = task.id;
-    const taskContainer = document.getElementById(taskId);
-    const taskWrapper = (`${taskId}-wrapper`);
+function opentaskEditorForm(element) {
+    const elementPosition = `${getNumFromStr(element.id)}-tk`;
+    const taskId = element.dataset.taskid;
+    const callerId = element.id;
+    const taskContainer = document.getElementById(elementPosition);
+    const taskWrapper = (`${elementPosition}-wrapper`);
 
-    addTaskFormToPage(taskContainer, taskId);
+    addTaskFormToPage(taskContainer, elementPosition);
     const formAddTaskBtn = document.getElementById('form-add-task-btn');
     const formCancelBtn = document.getElementById('cancel-btn');
 
@@ -231,6 +283,16 @@ function editTaskObj(taskObj) {
     taskObj.setDate(taskFormElementsObj.date.value);
     taskObj.setPriority(taskFormElementsObj.priority.value);
     taskObj.setAssignee(taskFormElementsObj.assignee.value);
+    
+    if (Number(taskFormElementsObj.project.value)) {
+        projectsArr[taskObj.projectId].delTaskId(taskObj.id);
+        addNewTaskToProject(Number(taskFormElementsObj.project.value), taskObj.id);
+    }
+    if (Number(taskObj.projectId)) {
+        projectsArr[taskObj.projectId].delTaskId(taskObj.id);
+    }
+    taskObj.setProjectId(taskFormElementsObj.project.value);
+
 }
 
 function updateFormFields(taskObj) {
@@ -240,6 +302,7 @@ function updateFormFields(taskObj) {
     taskFormElements.date.value = taskObj.getDate();
     taskFormElements.priority.value = taskObj.getPriority();
     taskFormElements.assignee.value = taskObj.getAssignee();
+    taskFormElements.project.value = taskObj.getProjectId();;
 }
 
 function updatePageTaskElements(taskId) {
@@ -251,7 +314,11 @@ function updatePageTaskElements(taskId) {
     formComponentObj.date.textContent = formatDate(taskObj.getDate());
     formComponentObj.priority.textContent = capitalize(taskObj.getPriority());
     formComponentObj.name.textContent = capitalize(taskObj.getAssignee())
-    formComponentObj.priorityIndicator.classList.replace(formComponentObj.priorityIndicator.classList[1], `priority-${taskObj.getPriority()}`);
+    formComponentObj.priorityIndicator.classList
+        .replace(
+            formComponentObj.priorityIndicator.classList[1],
+            `priority-${taskObj.getPriority()}`
+        );
 
 
 }
@@ -260,8 +327,8 @@ function addEventListenerTOTaskInterfaceBtns(elementClass) {
     const taskBtn = document.querySelectorAll(`.${elementClass}`);
     taskBtn.forEach((item) => {
         item.onclick = () => {
-            removeTask(item.id);
-            if (item.id.slice(-4) === 'edit') {
+            removeTask(item);
+            if (item.id.split('-')[1] === 'edit') {
                 allowSingleFormOnPage();
                 opentaskEditorForm(item);
             }
@@ -290,10 +357,7 @@ function taskFormInterface(event) {
 
 function checkBoxInterFace(event) {
     const elementId = event.target.id;
-    const idLen = elementId.length;
-
-    // idLen === 3 because it insure that the id will always refer to checkbox 0-c, 1-c.
-    if (elementId[idLen - 1] === 'c' && idLen === 3) {
+    if (elementId.split('-')[1] === 'c') {
         changeTaskState(event);
     }
 }
@@ -311,17 +375,12 @@ function allowSingleFormOnPage() {
     }
 }
 
-
-
-export function getTasks() {
-    return taskArr;
-}
-
 export default function taskFormController() {
     document.onclick = (event) => {
         checkBoxInterFace(event);
         taskFormInterface(event);
         addEventListenerTOTaskInterfaceBtns('task-interface-btn');
         addProjectEvent(event);
+        sidebarEvents();
     }
 }

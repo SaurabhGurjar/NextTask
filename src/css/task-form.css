@@ -4,7 +4,7 @@
     width: 100%;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 4px 1px rgba(66, 66, 66, 0.4);
+    box-shadow: 0 0 4px 1px rgba(66, 66, 66, 0.2);
 }
 
 #task-form {
@@ -41,9 +41,9 @@
 
 .task-btn-wrapper {
     display: flex;
-    padding: 0.3em .5em;
+    padding: 8px 15px;
     border: 1px solid #DBDFEA;
-    border-radius: 0.3em;
+    border-radius: 8px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -64,30 +64,52 @@
     cursor: pointer;
     background: none;
     border: none;
+    max-width: 95px;
 }
-
+#priority-form-container {
+    max-width: 70px;
+}
 .control-btn-container {
     position: relative;
     display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
+    justify-content: space-between;
     border-top: 1px solid rgba(66, 66, 66, 0.2);
-    padding: 10px;
+    padding: 15px 10px;
+}
 
+.control-btn-wapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
 }
 
 .control-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.7em 0.9em;
+    padding: 8px 15px;
     border-radius: 10px;
     border: none;
     color: #3f3f3f;
-    font-weight: 900;
+    font-weight: 500;
     background: none;
     outline: 1px solid rgba(66, 66, 66, 0.2);
+}
 
+.project-selector-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    padding: 4px;
+    outline: 1px solid rgba(66, 66, 66, 0.2);
+}
+
+#project-selector {
+    border: none;
+    background: none;
+    outline: none;
 }
 
 .control-btn:hover {
@@ -103,6 +125,7 @@
 
 #form-add-task-btn:hover {
     background-color: #8294C4;
+    font-weight: 900;
     color: #FFF;
     border: none;
 }
@@ -174,6 +197,11 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+#priority {
+    border: none;
+    background: none;
+    outline: none;
+}
 
 #yy:focus-visible,
 #mm:focus-visible,
@@ -193,11 +221,14 @@ input::-webkit-inner-spin-button {
     left: -80px;
     z-index: 10;
     padding: 5px;
-    border-radius: 4px;
+    border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 0 4px 2px rgba(64, 64, 64, 0.1);
     justify-content: center;
     align-items: center;
+}
+#assignee-btn {
+    max-width: 130px;
 }
 
 option[value="high"] {

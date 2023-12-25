@@ -1,229 +1,265 @@
 import { dueToday, todayDate } from "./scripts/formatDate";
-const data = [
-    {
-        name: 'Web development',
-        projects: {
-            name: 'Shopping Cart',
-            subTeams: [
-                {
-                    name: 'Frontend',
-                    task: 'UI design',
-                    subTasks: [
-                        {
-                            heading: 'Design Navigation',
-                            description: 'Design a navigation for small screen and big screen screen.',
-                            openDate: '2023-12-09',
-                            dueDate: '2023-12-11',
-                            assignee: 'Rajat Morya',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'low',
-                        },
-                        {
-                            heading: 'Sidebar Design',
-                            description: '',
-                            openDate: '2023-12-08',
-                            dueDate: '2023-12-12',
-                            assignee: 'Manav Badola',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                        },
-                    ]
-                },
-                {
-                    name: 'Backend',
-                    task: 'User Authentication',
-                    subTasks: [
-                        {
-                            heading: 'Create API to authenticate user phone number.',
-                            description: '',
-                            openDate: '2023-12-08',
-                            dueDate: '2023-12-18',
-                            assignee: 'Hemant Yadav',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'medium',
-                        },
-                        {
-                            heading: 'Create API to authenticate user Email Address.',
-                            description: '',
-                            openDate: '2023-12-08',
-                            dueDate: '2023-12-21',
-                            assignee: 'Manish Shandilya',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                        },
-                    ]
-                },
+import { getNumFromStr, capitalize } from "./scripts/stringlib";
 
-                {
-                    name: 'Backend',
-                    task: 'Database Design',
-                    subTasks: [
-                        {
-                            heading: 'Create a Database to store user information.',
-                            description: '',
-                            openDate: '2023-12-08',
-                            dueDate: '2023-12-16',
-                            assignee: 'Arun singh',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                        },
-                        {
-                            heading: 'Create a Database to store products information.',
-                            description: '',
-                            openDate: '2023-12-08',
-                            dueDate: '2023-12-10',
-                            assignee: 'Kamal singh',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                        },
-                    ]
-                },
-            ],
-        },
+export const projectsArr = [];
+export const teamsArr = [];
+export const taskArr = [];
 
-    },
-    {
-        name: 'Artificial intelligence',
-        projects: {
-            name: 'LLM system',
-            subTeams: [
-                {
-                    name: 'Natural language',
-                    task: 'UI design',
-                    subTasks: [
-                        {
-                            heading: 'Make training dataset.',
-                            description: 'Make dataset for training system.',
-                            openDate: '2023-12-09',
-                            dueDate: '2023-12-11',
-                            assignee: 'Rajat Morya',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'low',
-                        },
-                        {
-                            heading: 'Make Image dataset.',
-                            description: 'Make dataset for training Image generating system.',
-                            openDate: '2023-12-08',
-                            dueDate: '2023-12-12',
-                            assignee: 'Manav Badola',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                        },
-                    ]
-                },
-            ],
-        },
-    },
-    {
-        name: 'Data science',
-        projects: {
-            name: 'Data visualizer',
-            subTeams: [],
-        },
-    },
-    {
-        name: 'Social media',
-        projects: {
-            name: 'Instagram post maker',
-            subTeams: [],
-        },
-    },
-    {
-        name: 'Marketing',
-        projects: {
-            name: 'Youtube video marker',
-            subTeams: [],
-        },
-    },
-    {
-        name: 'private',
-        projects: {
-            name: 'private',
-            subTeams: [
-                {
-                    name: 'private',
-                    task: 'Webapp Design',
-                    subTasks: [
-                        {
-                            heading: 'Create website design.',
-                            description: '',
-                            openDate: '2023-12-18',
-                            dueDate: '2023-12-21',
-                            assignee: 'none',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                            isPrivate: true,
-                        },
-                        {
-                            heading: 'Create mobile website design.',
-                            description: '',
-                            openDate: '2023-12-18',
-                            dueDate: '2023-12-21',
-                            assignee: 'none',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                            isPrivate: true,
-                        },
-                    ]
-                },
-            ],
-        },
-    },
-    {
-        name: 'general',
-        projects: {
-            name: 'general',
-            subTeams: [
-                {
-                    name: 'general',
-                    task: 'Webapp Design',
-                    subTasks: [
-                        {
-                            heading: 'Create website design.',
-                            description: '',
-                            openDate: '2023-12-18',
-                            dueDate: '2023-12-21',
-                            assignee: 'none',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                            isPrivate: true,
-                        },
-                        {
-                            heading: 'Create mobile website design.',
-                            description: '',
-                            openDate: '2023-12-18',
-                            dueDate: '2023-12-21',
-                            assignee: 'none',
-                            assignor: 'Saurabh Choudhary',
-                            status: 'Not started',
-                            priority: 'high',
-                            isPrivate: true,
-                        },
-                    ]
-                },
-            ],
-        }
-    },
+const teams = [
+    { name: 'Web development', projectIds: [1] },
+    { name: 'Artificial intelligence', projectIds: [2] },
+    { name: 'Data science', projectIds: [3] },
+    { name: 'Social media', projectIds: [4, 5] },
+    { name: 'Marketing', projectIds: [] },
 ];
 
+const projects = [
+    {name: 'shopping cart', taskId: [0, 1, 2]},
+    {name: 'LLM sytem', taskId: [3, 4]},
+    {name: 'data visualizer', taskId: []},
+    {name: 'instagram post maker', taskId: []},
+    {name: 'youtuber video maker', taskId: []},
+];
+
+const tasks = [
+    {
+        heading: 'Design Navigation',
+        description: 'Design a navigation for small screen and big screen screen.',
+        openDate: '2023-12-09',
+        dueDate: '2023-12-23',
+        assignee: 'Rajat Morya',
+        assignor: 'Saurabh Choudhary',
+        projectId: 0,
+        status: 'Not started',
+        priority: 'low',
+    },
+    {
+        heading: 'Sidebar Design',
+        description: '',
+        openDate: '2023-12-08',
+        dueDate: '2023-12-22',
+        assignee: 'Manav Badola',
+        assignor: 'Saurabh Choudhary',
+        projectId: 0,
+        status: 'Not started',
+        priority: 'high',
+    },
+    {
+        heading: 'Create API to authenticate user phone number.',
+        description: '',
+        openDate: '2023-12-08',
+        dueDate: '2023-12-18',
+        assignee: 'Hemant Yadav',
+        assignor: 'Saurabh Choudhary',
+        projectId: 0,
+        status: 'Not started',
+        priority: 'medium',
+    },
+    {
+        heading: 'Make training dataset.',
+        description: 'Make dataset for training system.',
+        openDate: '2023-12-09',
+        dueDate: '2023-12-11',
+        assignee: 'Rajat Morya',
+        assignor: 'Saurabh Choudhary',
+        projectId: 1,
+        status: 'Not started',
+        priority: 'low',
+    },
+    {
+        heading: 'Make Image dataset.',
+        description: 'Make dataset for training Image generating system.',
+        openDate: '2023-12-08',
+        dueDate: '2023-12-12',
+        assignee: 'Manav Badola',
+        assignor: 'Saurabh Choudhary',
+        projectId: 1,
+        status: 'Not started',
+        priority: 'high',
+    },
+    {
+        heading: 'Create website design.',
+        description: '',
+        openDate: '2023-12-18',
+        dueDate: '2023-12-21',
+        assignee: 'none',
+        assignor: 'Saurabh Choudhary',
+        projectId: 'p',
+        status: 'Not started',
+        priority: 'high',
+    },
+    {
+        heading: 'Create mobile website design.',
+        description: '',
+        openDate: '2023-12-18',
+        dueDate: '2023-12-21',
+        assignee: 'none',
+        assignor: 'Saurabh Choudhary',
+        projectId: 'p',
+        status: 'Not started',
+        priority: 'high',
+    },
+    {
+        heading: 'Create website design.',
+        description: '',
+        openDate: '2023-12-18',
+        dueDate: '2023-12-21',
+        assignee: 'none',
+        assignor: 'Saurabh Choudhary',
+        projectId: 'g',
+        status: 'Not started',
+        priority: 'high',
+    },
+    {
+        heading: 'Create mobile website design.',
+        description: '',
+        openDate: '2023-12-18',
+        dueDate: '2023-12-21',
+        assignee: 'none',
+        assignor: 'Saurabh Choudhary',
+        projectId: 'g',
+        status: 'Not started',
+        priority: 'high',
+    },
+];
+export class Team {
+    constructor(id, name, projectIds, memberIds,) {
+        this.id = id;
+        this.name = name;
+        this.projectIds = projectIds || [];
+        this.memberIds = memberIds || [];
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getMemberIds() {
+        return this.memberIds;
+    }
+
+    getProjectIds() {
+        return this.projectIds;
+    }
+
+    addMemeber(memberId) {
+        this.memberIds.push(memberId);
+    }
+
+    addProject(projectId) {
+        this.projectIds.push(projectId);
+    }
+
+    delMember(memberId) {
+        const members = [...this.memberIds];
+        members.forEach((item, index) => {
+            if (item === memberId) {
+                members.splice(index, 1);
+                return;
+            }
+        });
+        this.memberIds = members;
+    }
+
+    delProjects(projectId) {
+        const projects = [...this.projectIds];
+        projects.forEach((item, index) => {
+            if (item === projectId) {
+                projects.splice(index, 1);
+                return;
+            }
+        });
+        this.projectIds = projects;
+    }
+
+    static idCounter = 0; 
+
+    static getIdCounter () {
+        return this.idCounter;
+    }
+
+    static IncrementCounter () {
+        this.idCounter += 1;
+    }
+
+    static assignId () {
+        const id = this.getIdCounter();
+        this.IncrementCounter()
+        return id;
+    }
+}
+
+export class Project {
+    constructor(id, name, taskId) {
+        this.id = id;
+        this.name = name;
+        this.taskId = taskId || [];
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    getName() {
+        return capitalize(this.name);
+    }
+
+    addTask (id) {
+        this.taskId.push(id);
+    }
+
+    delTaskId(id) {
+        const taskId = [...this.taskId];
+        taskId.forEach((item, index) => {
+            if (item === id) {
+                taskId.splice(index, 1);
+                return;
+            }
+        });
+        this.taskId = taskId;
+    }
+
+    static idCounter = 0; 
+
+    static getIdCounter () {
+        return this.idCounter;
+    }
+
+    static IncrementCounter () {
+        this.idCounter += 1;
+    }
+
+    static assignId () {
+        const id = this.getIdCounter();
+        this.IncrementCounter()
+        return id;
+    }
+}
+
 export class Task {
-    constructor(heading, description, date, priority, assignee, status, completed, team, project, isPrivate) {
+    constructor(
+        id,
+        heading,
+        description,
+        date,
+        priority,
+        assignee,
+        projectId,
+        status,
+        completed,
+    ) {
+        this.id = id;
         this.heading = heading;
         this.description = description;
         this.date = date;
         this.priority = priority;
         this.assignee = assignee;
+        this.projectId = projectId;
+
         if (!status) {
             this.status = 'not started';
         } else {
@@ -234,21 +270,15 @@ export class Task {
         } else {
             this.completed = false;
         }
-        if (!team) {
-            this.team = 'none';
-        } else {
-            this.team = team;
-        }
-        if (!project) {
-            this.project = 'none';
-        } else {
-            this.project = project;
-        }
-        if (isPrivate) {
-            this.isPrivate = isPrivate;
+        if (this.projectId === 'p') {
+            this.isPrivate = true;
         } else {
             this.isPrivate = false;
         }
+}
+
+    getId() {
+        return this.id;
     }
 
     getHeading() {
@@ -275,21 +305,18 @@ export class Task {
         return this.status;
     }
 
-    getTaskState() {
+    isCompleted() {
         return this.completed;
     }
 
-    getTeam() {
-        return this.team;
+    getProjectId() {
+        return this.projectId;
     }
-
-    getPrject() {
-        return this.project;
-    }
-
+    
     getPrivate() {
         return this.isPrivate;
     }
+
 
     setHeading(heading) {
         this.heading = heading;
@@ -315,103 +342,127 @@ export class Task {
         this.status = status;
     }
 
-    setTaskState(completed) {
+    setCompleted(completed) {
         this.completed = completed;
     }
 
-    setTeam(team) {
-        this.team = team;
+    setProjectId(projectId) {
+        this.projectId = projectId;
+        if (projectId === 'p') this.isPrivate = true;
+        else this.isPrivate = false;
     }
 
-    setProject(project) {
-        this.project = project;
+    static idCounter = 0; 
+
+    static getIdCounter () {
+        return this.idCounter;
     }
-    setPrivate(isPrivate) {
-        this.isProject = isPrivate;
+
+    static IncrementCounter () {
+        this.idCounter += 1;
+    }
+
+    static assignId () {
+        const id = this.getIdCounter();
+        this.IncrementCounter()
+        return id;
     }
 }
 
-export function sortTasksDateWiseAsc (tasks) {
+export function sortTasksDateWiseAsc(tasks) {
     return tasks.toSorted((a, b) => Number(a.date.split('-')[2]) - Number(b.date.split('-')[2]));
 }
+
+export function getTeams() {
+    teams.forEach((team) => {
+        teamsArr.push(new Team(Team.assignId(), team.name, team.projectIds));
+    });
+}
+
+export function getProjects() {
+    projects.forEach((item) => {
+        projectsArr.push(new Project(Project.assignId(), item.name, item.taskId));
+    });
+}
+
 export function getDataTasks() {
+    tasks.forEach((item) => {
+        taskArr.push(
+            new Task(
+                Task.assignId(),
+                item.heading,
+                item.description,
+                item.dueDate,
+                item.priority,
+                item.assignee,
+                item.projectId,
+                item.status,
+                item.completed,
+                item.isPrivate
+            )
+        );
+    });
+}
+
+export function getInboxTasks() {
     const tasks = [];
-    data.forEach((team) => {
-        if (team.name === 'private') return;
-        team.projects.subTeams.forEach((subteam) => {
-            subteam.subTasks.forEach((item) => {
-                tasks.push(new Task(item.heading, item.description, item.dueDate, item.priority, item.assignee, item.status, item.completed, `${team.name}-${subteam.name}`, `${team.projects.name}`, item.isPrivate));
-            })
-        });
+    taskArr.forEach((item) => {
+        if (item.getPrivate()) return;
+        tasks.push(item);
     });
     return tasks;
 }
 
 export function getPrivateTask() {
     const tasks = [];
-    data.forEach((team) => {
-        if (team.name !== 'private') return;
-        team.projects.subTeams.forEach((subteam) => {
-            subteam.subTasks.forEach((item) => {
-                tasks.push(new Task(item.heading, item.description, item.dueDate, item.priority, item.assignee, item.status, item.completed, undefined, undefined, item.isPrivate));
-            })
-        });
+    taskArr.forEach((item) => {
+        if (item.getPrivate()) tasks.push(item);
+        
     });
     return sortTasksDateWiseAsc(tasks);
 }
 
 export function getTodayTask() {
     const tasks = [];
-    data.forEach((team) => {
-        team.projects.subTeams.forEach((subteam) => {
-            subteam.subTasks.forEach((item) => {
-                if(dueToday(item.dueDate)) {
-                    tasks.push(new Task(item.heading, item.description, item.dueDate, item.priority, item.assignee, item.status, item.completed, undefined, undefined, item.isPrivate));
-                }
-            });
-        })
-    });
+
+    taskArr.forEach((item) => {
+        if (dueToday(item.getDate())) {
+            tasks.push(item);
+        }
+    })
     return tasks;
 }
 export function getUpcomingTask() {
     const nextSevenDate = todayDate() + 7;
     const tasks = [];
-    data.forEach((team) => {
-        team.projects.subTeams.forEach((subteam) => {
-            subteam.subTasks.forEach((item) => {
-                if(item.dueDate.split('-').map((item) => parseInt(item))[2] > todayDate() && item.dueDate.split('-').map((item) => parseInt(item))[2] < nextSevenDate) {
-                    tasks.push(new Task(item.heading, item.description, item.dueDate, item.priority, item.assignee, item.status, item.completed, undefined, undefined, item.isPrivate));
-                }
-            });
-        })
+    taskArr.forEach((item) => {
+        if (
+            item.getDate().split('-').map((item) => parseInt(item))[2] > todayDate()
+            && item.getDate().split('-').map((item) => parseInt(item))[2] < nextSevenDate
+        ) {
+            tasks.push(item);
+        }
     });
     return sortTasksDateWiseAsc(tasks);
-}
-export function getProjectTask (projectId) {
-    const projectName = document.getElementById(projectId).textContent;
-    const tasks = [];
-    data.forEach((team) => {
-        if (team.projects.name !== projectName) return;
-        team.projects.subTeams.forEach((subteam) => {
-            subteam.subTasks.forEach((item) => {
-                tasks.push(new Task(item.heading, item.description, item.dueDate, item.priority, item.assignee, item.status, item.completed, undefined, undefined, item.isPrivate));
-            });
-        })
-    });
-    return sortTasksDateWiseAsc(tasks);
-}
-export function getProjects() {
-    const projects = [];
-    data.forEach((item) => {
-        projects.push(item.projects.name);
-    });
-    return projects;
 }
 
-export function getTeams() {
-    const teams = [];
-    data.forEach((team) => {
-        teams.push(team);
+export function getProjectTask(projectId) {
+
+    const id = getNumFromStr(projectId);
+    const tasks = [];
+    projectsArr[id].taskId.forEach((id) => {
+        taskArr.forEach(item => {
+            if (item.getId() === id) {
+                tasks.push(item);
+            }
+        }); 
     });
-    return teams;
+    return sortTasksDateWiseAsc(tasks);
+}
+
+export function projectStringfy() {
+    return JSON.stringify(tasks);
+}
+function stringToObj() {
+    return JSON.parse(projectStringfy());
 }

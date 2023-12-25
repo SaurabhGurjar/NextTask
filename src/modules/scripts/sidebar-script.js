@@ -1,28 +1,29 @@
 import content from "../ui-modules/content";
-import { getDataTasks, getPrivateTask, getTodayTask, getUpcomingTask, getProjectTask } from "../data";
+import { getInboxTasks, getPrivateTask, getTodayTask, getUpcomingTask, getProjectTask, taskArr } from "../data";
 import { getTasksHTML } from "./showtask";
+import { closeTaskForm } from "./task-script";
+import { getNumFromStr } from "./stringlib";
 
-function rotateArrow (btnId) {
+function rotateArrow(btnId) {
     const arrow = document.getElementById(btnId);
     arrow.classList.toggle('rotate-dropdown-btn');
 }
 
-function toggleDropdown (btnId) {
+function toggleDropdown(btnId) {
     const projectsLinkContainer = document.getElementById('sd-project-links');
     const teamsLinkContainer = document.getElementById('sd-team-links');
-    
-    if(btnId === 'dropdown-project-btn') {
+
+    if (btnId === 'dropdown-project-btn') {
         projectsLinkContainer.classList.toggle('hide-projects-and-teams');
     } else if (btnId === 'dropdown-team-btn') {
         teamsLinkContainer.classList.toggle('hide-projects-and-teams');
     }
 }
 
-function dropdownEvents () {
+function dropdownEvents() {
     const dropdownBtn = document.querySelectorAll('.dropdown-btn');
 
     dropdownBtn.forEach((btn) => {
-
         btn.onclick = () => {
             rotateArrow(btn.id);
             toggleDropdown(btn.id);
@@ -30,43 +31,49 @@ function dropdownEvents () {
     });
 }
 
-function changeMainHeading(newHeading) {
+function changeMainHeading(newHeading, id) {
     const heading = document.getElementById('mhd');
     heading.textContent = newHeading;
+    heading.dataset.pageid = id;
 }
 
+
+function renderTasks(arr) {
+    tasks.innerHTML = getTasksHTML(arr);
+}
 
 export function linksEvents() {
     const links = document.querySelectorAll('.sd-links');
     const tasks = document.getElementById('tasks');
 
-   const heading =  links.forEach((link) => {
+    const heading = links.forEach((link) => {
         link.onclick = () => {
             if (!(link.classList[0] === 'sd-top-links' || link.classList[0] === 'sd-projects-link')) return;
 
             switch (link.id) {
-                case 'inbox-tab':
-                    tasks.innerHTML = getTasksHTML(getDataTasks());
+                case 'g':
+                    renderTasks(getInboxTasks());
                     break;
-                case 'private-tasks-tab': 
-                    tasks.innerHTML = getTasksHTML(getPrivateTask());
+                case 'p':
+                    renderTasks(getPrivateTask());
                     break;
-                case 'today-tab':
-                    tasks.innerHTML = getTasksHTML(getTodayTask());
+                case 't':
+                    renderTasks(getTodayTask());
                     break;
-                case 'upcoming-tab':
-                    tasks.innerHTML = getTasksHTML(getUpcomingTask());
+                case 'u':
+                    renderTasks(getUpcomingTask());
                     break;
                 default:
-                    tasks.innerHTML = getTasksHTML(getProjectTask(link.id));
+                    renderTasks(getProjectTask(link.id));
                     break;
-                }
-                changeMainHeading(link.textContent);   
+            }
+            changeMainHeading(link.textContent, link.id);
+            closeTaskForm();
         };
     });
 }
 
-export default function sidebarEvents () {
+export default function sidebarEvents() {
     dropdownEvents();
 }
 

@@ -10,39 +10,42 @@ import { formatDate } from '../scripts/formatDate';
 
 
 export function showPriority(taskObj) {
-    if (!taskObj.getTaskState()) {
-        if(taskObj.getPriority() === 'high') {
-            return 'priority-high';
-        } else if (taskObj.getPriority() === 'medium') {
-            return 'priority-medium';
-        } else if (taskObj.getPriority() === 'low'){
-            return 'priority-low';
+    if (!taskObj) return ''; 
+        if (!taskObj.isCompleted()) {
+            if(taskObj.getPriority() === 'high') {
+                return 'priority-high';
+            } else if (taskObj.getPriority() === 'medium') {
+                return 'priority-medium';
+            } else if (taskObj.getPriority() === 'low'){
+                return 'priority-low';
+            }
+        } else {
+            return '';
         }
-    } else {
-        return '';
     }
-}
+
 
 export default function taskTemplate(taskId, taskObj) {
+    if (!taskObj) return ''; 
     let addClass = '';
     let check = '';
     let display =  'flex';
-    if (taskObj.getTaskState()) {
+    if (taskObj.isCompleted()) {
         addClass = 'task-completed';
         display = 'none';
         check = 'checked';
     }
     return (`
-            <div class="task-container ${addClass}" id="${taskId}">
-                <div class="task-wrapper" id="${taskId}-wrapper">
+            <div class="task-container ${addClass}" id="${taskId}-tk">
+                <div class="task-wrapper" id="${taskId}-tk-wrapper">
                     <div class="checkbox-heading-interface-btn-container" id="${taskId}-chc">
                         <div class="checkbox-heading-btn-container">
                             <input type="checkbox" id="${taskId}-c" class="task-cbox" ${check}>
                             <span id="${taskId}-h" class="task-heading">${capitalize(taskObj.getHeading())}</span>
                         </div>
                         <div class="task-edit-del-btn-container">
-                            <button class="task-interface-btn" id="${taskId}-edit" style="display: ${display}"><img src="${editIcon}" class="task-date-icon"></button>
-                            <button class="task-interface-btn" id="${taskId}-del"><img src="${delIcon}" class="task-date-icon"></button>
+                            <button class="task-interface-btn" id="${taskId}-edit" style="display: ${display}" data-taskid="${taskObj.getId()}"><img src="${editIcon}" class="task-date-icon"></button>
+                            <button class="task-interface-btn" id="${taskId}-del" data-taskid="${taskObj.getId()}"><img src="${delIcon}" class="task-date-icon"></button>
                         </div>
                     </div>
                     <div class="d-p-pi-contianer">

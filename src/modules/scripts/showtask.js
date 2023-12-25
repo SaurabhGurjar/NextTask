@@ -9,9 +9,11 @@ function createtasksHtml(tasks) {
 }
 
 export function appendTask(taskId, taskObj, container) {
+    if (!taskObj) return '';
     container.innerHTML += (taskTemplate(taskId, taskObj));
 }
 
 export function getTasksHTML(tasks) {
+    if (tasks.length === 0) return '';
     return createtasksHtml(tasks);
 } 

@@ -2,7 +2,7 @@
 import '../../css/sidebar.css';
 
 // Import project and teams
-import { getProjects, getTeams } from '../data';
+import { projectsArr, teamsArr  } from '../data';
 
 // Import icons
 import inboxIcon from '../../assets/icons/inbox.svg';
@@ -15,22 +15,29 @@ import todayIcon from '../../assets/icons/today.svg';
 import teamIcon from '../../assets/icons/team.svg';
 import upcomingIcon from '../../assets/icons/upcoming.svg';
 import ArrowIcon from '../../assets/icons/arrow.svg';
+import delIcon from '../../assets/icons/delete.svg';
 
-import { strip } from '../scripts/stringlib';
+
+import { strip, capitalize } from '../scripts/stringlib';
 
 // Sidebar links
 const defaultTabs = [{
+    id: 'g',
     name: 'Inbox',
     icon: inboxIcon,
-}, {
+}, 
+{
+    id: 'p',
     name: 'Private tasks',
     icon: privateTaskIcon,
 },
 {
+    id: 't',
     name: 'Today',
     icon: todayIcon,
 },
 {
+    id: 'u',
     name: 'Upcoming',
     icon: upcomingIcon,
 }
@@ -38,7 +45,7 @@ const defaultTabs = [{
 
 
 function createlink(link, section) {
-    return `<a href="#" class="sd-${section}-links sd-links" id="${strip(link.name.toLowerCase())}-tab">${link.name}</a>`;
+    return `<a href="#" class="sd-${section}-links sd-links" id="${link.id}">${link.name}</a>`;
 }
 
 function createIconElement(link) {
@@ -56,11 +63,11 @@ function createLinksHtml(links, section) {
 function createHeading(array) {
     let headings = '';
     array.forEach((item) => {
-        if (item === 'general' || item === 'private') return;
         headings += (
-            `<div class="sd-projects-link-wrapper">
+            `<div class="sd-projects-link-wrapper" id="${item.getId()}-plw">
                 <div class="sd-project-color-box"></div>
-                <a id="${strip(item.toLowerCase())}" class="sd-projects-link sd-links" href="#">${item}</a>
+                <a id="${item.id}-pl" class="sd-projects-link sd-links" href="#">${item.getName()}</a>
+                <button class="pt-del-btn" id="${item.getId()}-pdel" data-projectid="${item.getId()}"><img src="${delIcon}" class="task-date-icon"></button>
             </div>`
         );
     });
@@ -77,6 +84,7 @@ function createTeamLinkHtml(array) {
                     <span class="sd-team-icon">${item.name.toUpperCase()[0]}</span>
                 </div>
                 <a id="${strip(item.name.toLowerCase())}" class="sd-links sd-team-link" href="#">${item.name}</a>
+                <button class="pt-del-btn" id="${item.getId()}-tdel" data-teamid="${item.getId()}"><img src="${delIcon}" class="task-date-icon"></button>
             </div>
         `);
     });
@@ -92,16 +100,6 @@ const sidebarFooter = [{
     icon: helpIcon,
 }
 ];
-
-function parseData() {
-    const projects = getProjects();
-    projects.forEach((item) => {
-
-    });
-    // console.log(getTeams());
-}
-
-parseData();
 
 // Sidebar contain two section top section and bottom section
 
@@ -135,7 +133,7 @@ export default function sidebar() {
                             </div>
                         </div>
                         <div class="sd-links-container" id="sd-project-links">
-                            ${createHeading(getProjects())}
+                            ${createHeading(projectsArr)}
                         </div>
                     </div>
                     <div class="sd-section-wrapper">
@@ -154,7 +152,7 @@ export default function sidebar() {
                             </div>
                         </div>
                         <div class="sd-links-container" id="sd-team-links">
-                        ${createTeamLinkHtml(getTeams())}
+                        ${createTeamLinkHtml(teamsArr)}
                         </div>
                     </div>
                 </div>

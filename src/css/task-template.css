@@ -66,14 +66,16 @@
     gap: 5px;
 }
 
-.task-interface-btn {
+.task-interface-btn,
+.pt-del-btn {
     border: none;
     padding: 4px 6px;
     background: none;
     border-radius: 6px;
 }
 
-.task-interface-btn:hover {
+.task-interface-btn:hover,
+.pt-del-btn:hover {
     background-color: #DBDFEA;
 }
 

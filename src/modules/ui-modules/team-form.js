@@ -4,10 +4,10 @@ export default function teamForm() {
             <div class="tform-heading-container">
                 <span class="tform-heading">Add Team</span>
             </div>
-            <form action="" id="tform">
+            <form id="tform">
                 <div class="tform-field-container">
                     <label for="tname">Name</label>
-                    <input type="text" name="tf-name" id="tname" autocomplete="off" required maxlength="50">
+                    <input type="text" name="tfname" id="tname" autocomplete="off" required maxlength="50">
                 </div>
                 <div class="team-form-btn-container">
                     <div class="tform-btn-container">
