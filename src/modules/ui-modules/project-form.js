@@ -6,7 +6,7 @@ function createTeamOption (teams) {
    const teamOption = [];
     teams.forEach((item) => {
         if (item.name === 'private' || item.name === 'general') return;
-        teamOption.push(`<option value="${item.name}">${capitalize(item.name)}</option>`);
+        teamOption.push(`<option value="${item.getId()}">${capitalize(item.name)}</option>`);
     });
     return teamOption.join('');
 }
@@ -26,8 +26,6 @@ export default function projectForm() {
                     <div class="team-selector-container">
                         <select id="pform-team-selector">
                             <option value="Teams">Teams</option>
-                            <option value="private">Private</option>
-                            <option value="general">General</option>
                             ${createTeamOption(teamsArr)}
                         </select>
                     </div>

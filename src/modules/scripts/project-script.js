@@ -33,7 +33,7 @@ function removeProject (id) {
     removeProjectFromPage(id);
 }
 
-function delEvent() {
+export function delEvent() {
     const proDelBtn = document.querySelectorAll('.pt-del-btn');
     proDelBtn.forEach(btn => {
         btn.onclick = () => {

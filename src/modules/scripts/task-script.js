@@ -4,7 +4,8 @@ import assigneeScript from './assignee-script';
 import { showPriority } from '../ui-modules/task-template';
 import taskForm from '../ui-modules/task-form';
 import { capitalize, getNumFromStr } from './stringlib';
-import { Task, taskArr, projectsArr } from '../data';
+import { Task, taskArr, projectsArr, teamsArr } from '../data';
+import { save, saveData } from '../saveScript';
 import { formatDate, dueToday } from './formatDate';
 import addProjectEvent from './project-form-script';
 import { sidebarEvents, removeTaskFromProject } from './project-script';
@@ -186,6 +187,7 @@ function addNewTask(element) {
             editTaskObj(findTaskObj(getNumFromStr(callerId)));
             updatePageTaskElements(getNumFromStr(callerId));
         }
+        
         taskForm.reset();
         // date.value = 'Due date';
         elementVisibility(hiddenElementId, true);
@@ -218,6 +220,7 @@ function removeTask(element) {
             }
         });
         removeTaskFromPage(getNumFromStr(element.id));
+        save('svTasks', taskArr);
     }
 }
 
@@ -382,5 +385,8 @@ export default function taskFormController() {
         addEventListenerTOTaskInterfaceBtns('task-interface-btn');
         addProjectEvent(event);
         sidebarEvents();
+        save('svTasks', taskArr);
+        save('svProjects', projectsArr);
+        save('svTeams', teamsArr);
     }
 }

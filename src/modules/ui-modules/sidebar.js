@@ -52,7 +52,7 @@ function createIconElement(link) {
     return `<img src="${link.icon}" id="${strip(link.name.toLowerCase())}-icon" class="sd-icons">`;
 }
 
-function createLinksHtml(links, section) {
+function createLinksHTML(links, section) {
     let sdHtml = '';
     links.forEach((item) => {
         sdHtml += `<div class="sd-link-wrapper">${createIconElement(item) + createlink(item, section)}</div>`;
@@ -60,21 +60,25 @@ function createLinksHtml(links, section) {
     return sdHtml;
 }
 
-function createHeading(array) {
+export function createProjectLinkHTML (projectObj) {
+    return (
+        `<div class="sd-projects-link-wrapper" id="${projectObj.getId()}-plw">
+            <div class="sd-project-color-box"></div>
+            <a id="${projectObj.id}-pl" class="sd-projects-link sd-links" href="#">${projectObj.getName()}</a>
+            <button class="pt-del-btn" id="${projectObj.getId()}-pdel" data-projectid="${projectObj.getId()}"><img src="${delIcon}" class="task-date-icon"></button>
+        </div>`
+    );
+}
+
+function createProjectElements(array) {
     let headings = '';
     array.forEach((item) => {
-        headings += (
-            `<div class="sd-projects-link-wrapper" id="${item.getId()}-plw">
-                <div class="sd-project-color-box"></div>
-                <a id="${item.id}-pl" class="sd-projects-link sd-links" href="#">${item.getName()}</a>
-                <button class="pt-del-btn" id="${item.getId()}-pdel" data-projectid="${item.getId()}"><img src="${delIcon}" class="task-date-icon"></button>
-            </div>`
-        );
+        headings += createProjectLinkHTML(item);
     });
     return headings;
 }
 
-function createTeamLinkHtml(array) {
+function createTeamLinkHTML(array) {
     let teams = '';
     array.forEach((item) => {
         if (item.name === 'general' || item.name === 'private') return;
@@ -83,8 +87,10 @@ function createTeamLinkHtml(array) {
                 <div class="sd-team-icon-wrapper">
                     <span class="sd-team-icon">${item.name.toUpperCase()[0]}</span>
                 </div>
-                <a id="${strip(item.name.toLowerCase())}" class="sd-links sd-team-link" href="#">${item.name}</a>
-                <button class="pt-del-btn" id="${item.getId()}-tdel" data-teamid="${item.getId()}"><img src="${delIcon}" class="task-date-icon"></button>
+                <a id="${item.getId()}-tl" class="sd-links sd-team-link" href="#">${item.name}</a>
+                <button class="pt-del-btn" id="${item.getId()}-tdel" data-teamid="${item.getId()}">
+                    <img src="${delIcon}" class="task-date-icon">
+                </button>
             </div>
         `);
     });
@@ -114,7 +120,7 @@ export default function sidebar() {
             <div class="top-section">
                 <div class="sd-main">
                     <div class="sd-section-wrapper">
-                        ${createLinksHtml(defaultTabs, 'top')}
+                        ${createLinksHTML(defaultTabs, 'top')}
                     </div>
                     <div class="sd-section-wrapper">
                         <div class="sd-heading-wrapper">
@@ -133,7 +139,7 @@ export default function sidebar() {
                             </div>
                         </div>
                         <div class="sd-links-container" id="sd-project-links">
-                            ${createHeading(projectsArr)}
+                            ${createProjectElements(projectsArr)}
                         </div>
                     </div>
                     <div class="sd-section-wrapper">
@@ -152,13 +158,13 @@ export default function sidebar() {
                             </div>
                         </div>
                         <div class="sd-links-container" id="sd-team-links">
-                        ${createTeamLinkHtml(teamsArr)}
+                        ${createTeamLinkHTML(teamsArr)}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="sd-footer">
-                ${createLinksHtml(sidebarFooter, 'footer')}
+                ${createLinksHTML(sidebarFooter, 'footer')}
             </div>
         </div>
     `);

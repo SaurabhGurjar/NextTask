@@ -2,10 +2,10 @@ import header from './ui-modules/header.js';
 import footer from './ui-modules/footer.js';
 import sidebar from './ui-modules/sidebar.js';
 import content from './ui-modules/content.js';
-import { getDataTasks, getProjects, getTeams, projectStringfy } from './data.js';
-getDataTasks();
-getProjects();
-getTeams();
+import { saveData } from './saveScript.js';
+
+// Save demo data to local storage
+saveData();
 
 const main = document.createElement('div');
 main.id = 'root';

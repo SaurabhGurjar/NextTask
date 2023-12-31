@@ -1,7 +1,9 @@
 import projectForm from '../ui-modules/project-form';
 import teamForm from '../ui-modules/team-form';
 import { Project, Team, teamsArr, projectsArr, tasksArr, } from '../data';
+import { save } from '../saveScript';
 import { getNumFromStr } from './stringlib';
+import { createProjectLinkHTML } from '../ui-modules/sidebar';
 
 function createOverlay() {
     const body = document.querySelector('body');
@@ -70,16 +72,27 @@ function getTeamFormData() {
 
 function createProjectObj(projectId, projectName, teamName) {
     const project = new Project(projectId, projectName, teamName);
-    console.log(project);
     return project;
+}
+
+function appendProjects(projectLink) {
+    const projectContainer = document.getElementById('sd-project-links');
+    projectContainer.innerHTML += projectLink;
+}
+
+function createProjectLink(project) {
+    return createProjectLinkHTML(project);
 }
 
 function addNewProject() {
     const projectsArrLen = projectsArr.length;
     const projectFormData = getProjectFormData();
+    const project = createProjectObj(projectsArrLen, projectFormData.projectName)
     if (projectFormData === 1) return 1;
-    projectsArr.push(createProjectObj(projectsArrLen, projectFormData.projectName, projectFormData.teamName))
+    projectsArr.push(project);
     removeForm(projectFormData.formId);
+    appendProjects(createProjectLink(project));
+    save('svProjects', projectsArr);
 }
 
 function createTeam(teamId, teamName) {
@@ -92,8 +105,8 @@ function addNewTeam() {
     const teamFormData = getTeamFormData();
     if (teamFormData === 1) return 1;
     teamsArr.push(createTeam(teamsArrLen, teamFormData.teamName))
-    console.log(teamsArr);
     removeForm(teamFormData.formId);
+    save('svTeams', teamsArr);
 }
 
 export default function addProjectEvent(e) {

@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 export function formatDate(dateStr) {
     const date = dateStr.split('-').map((item) => parseInt(item));
-    return format(new Date(date[0], date[1] - 1, date[2]), 'MMM d yyy').toString();
+    return format(new Date(date[0], date[1] - 1, date[2]), 'MMM d yyy');
 }
 
 export function dueToday (dateStr) {
@@ -17,4 +17,8 @@ export function dueToday (dateStr) {
 
 export function todayDate () {
    return new Date().getDate();
+}
+
+export function dateNow () {
+    return format(new Date(), 'yyyy MM d').split(' ').join('-');
 }

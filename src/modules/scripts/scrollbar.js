@@ -7,12 +7,10 @@ function showScrollBarOnPageScroll() {
         }
     `);
     head.appendChild(style);
-    console.log(head, style);
 }
 
 function getScrollEvent() {
    window.addEventListener('click', (e) => {
-        console.log(e);
         showScrollBarOnPageScroll();
     });
 }

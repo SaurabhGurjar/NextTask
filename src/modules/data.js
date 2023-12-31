@@ -1,127 +1,11 @@
-import { dueToday, todayDate } from "./scripts/formatDate";
+import { dueToday, todayDate, dateNow } from "./scripts/formatDate";
 import { getNumFromStr, capitalize } from "./scripts/stringlib";
+import { tasks, projects, teams } from "./demoData";
+import { getSavedData } from "./saveScript";
 
 export const projectsArr = [];
 export const teamsArr = [];
 export const taskArr = [];
-
-const teams = [
-    { name: 'Web development', projectIds: [1] },
-    { name: 'Artificial intelligence', projectIds: [2] },
-    { name: 'Data science', projectIds: [3] },
-    { name: 'Social media', projectIds: [4, 5] },
-    { name: 'Marketing', projectIds: [] },
-];
-
-const projects = [
-    {name: 'shopping cart', taskId: [0, 1, 2]},
-    {name: 'LLM sytem', taskId: [3, 4]},
-    {name: 'data visualizer', taskId: []},
-    {name: 'instagram post maker', taskId: []},
-    {name: 'youtuber video maker', taskId: []},
-];
-
-const tasks = [
-    {
-        heading: 'Design Navigation',
-        description: 'Design a navigation for small screen and big screen screen.',
-        openDate: '2023-12-09',
-        dueDate: '2023-12-23',
-        assignee: 'Rajat Morya',
-        assignor: 'Saurabh Choudhary',
-        projectId: 0,
-        status: 'Not started',
-        priority: 'low',
-    },
-    {
-        heading: 'Sidebar Design',
-        description: '',
-        openDate: '2023-12-08',
-        dueDate: '2023-12-22',
-        assignee: 'Manav Badola',
-        assignor: 'Saurabh Choudhary',
-        projectId: 0,
-        status: 'Not started',
-        priority: 'high',
-    },
-    {
-        heading: 'Create API to authenticate user phone number.',
-        description: '',
-        openDate: '2023-12-08',
-        dueDate: '2023-12-18',
-        assignee: 'Hemant Yadav',
-        assignor: 'Saurabh Choudhary',
-        projectId: 0,
-        status: 'Not started',
-        priority: 'medium',
-    },
-    {
-        heading: 'Make training dataset.',
-        description: 'Make dataset for training system.',
-        openDate: '2023-12-09',
-        dueDate: '2023-12-11',
-        assignee: 'Rajat Morya',
-        assignor: 'Saurabh Choudhary',
-        projectId: 1,
-        status: 'Not started',
-        priority: 'low',
-    },
-    {
-        heading: 'Make Image dataset.',
-        description: 'Make dataset for training Image generating system.',
-        openDate: '2023-12-08',
-        dueDate: '2023-12-12',
-        assignee: 'Manav Badola',
-        assignor: 'Saurabh Choudhary',
-        projectId: 1,
-        status: 'Not started',
-        priority: 'high',
-    },
-    {
-        heading: 'Create website design.',
-        description: '',
-        openDate: '2023-12-18',
-        dueDate: '2023-12-21',
-        assignee: 'none',
-        assignor: 'Saurabh Choudhary',
-        projectId: 'p',
-        status: 'Not started',
-        priority: 'high',
-    },
-    {
-        heading: 'Create mobile website design.',
-        description: '',
-        openDate: '2023-12-18',
-        dueDate: '2023-12-21',
-        assignee: 'none',
-        assignor: 'Saurabh Choudhary',
-        projectId: 'p',
-        status: 'Not started',
-        priority: 'high',
-    },
-    {
-        heading: 'Create website design.',
-        description: '',
-        openDate: '2023-12-18',
-        dueDate: '2023-12-21',
-        assignee: 'none',
-        assignor: 'Saurabh Choudhary',
-        projectId: 'g',
-        status: 'Not started',
-        priority: 'high',
-    },
-    {
-        heading: 'Create mobile website design.',
-        description: '',
-        openDate: '2023-12-18',
-        dueDate: '2023-12-21',
-        assignee: 'none',
-        assignor: 'Saurabh Choudhary',
-        projectId: 'g',
-        status: 'Not started',
-        priority: 'high',
-    },
-];
 export class Team {
     constructor(id, name, projectIds, memberIds,) {
         this.id = id;
@@ -259,6 +143,7 @@ export class Task {
         this.priority = priority;
         this.assignee = assignee;
         this.projectId = projectId;
+        this.openDate = dateNow();
 
         if (!status) {
             this.status = 'not started';
@@ -380,19 +265,19 @@ export function getTeams() {
 }
 
 export function getProjects() {
-    projects.forEach((item) => {
+    getSavedData('svProjects').forEach((item) => {
         projectsArr.push(new Project(Project.assignId(), item.name, item.taskId));
     });
 }
 
 export function getDataTasks() {
-    tasks.forEach((item) => {
+    getSavedData('svTasks').forEach((item) => {
         taskArr.push(
             new Task(
                 Task.assignId(),
                 item.heading,
                 item.description,
-                item.dueDate,
+                item.date,
                 item.priority,
                 item.assignee,
                 item.projectId,
@@ -447,7 +332,6 @@ export function getUpcomingTask() {
 }
 
 export function getProjectTask(projectId) {
-
     const id = getNumFromStr(projectId);
     const tasks = [];
     projectsArr[id].taskId.forEach((id) => {
@@ -460,9 +344,5 @@ export function getProjectTask(projectId) {
     return sortTasksDateWiseAsc(tasks);
 }
 
-export function projectStringfy() {
-    return JSON.stringify(tasks);
-}
-function stringToObj() {
-    return JSON.parse(projectStringfy());
-}
+
+
